@@ -1,0 +1,42 @@
+huihu-anonymous:
+  admin:
+    sms_access_key_id: AccessKey ID
+    sms_access_secret: AccessKey Secret
+    sms_sign_name: SMS Signature Name
+    sms_template_code: SMS Template Code
+    slot_days_required: Days Required Per Slot
+    slot_posts_required: Posts Required Per Slot
+    slot_max: Maximum Slots
+
+  forum:
+    biscuit_label:
+      deleted: (Deleted)
+      frozen: (Frozen)
+      default: (Default)
+
+    manager:
+      title: Biscuit Manager
+      slots_used: "{used}/{total} slots used"
+      claim_new: Claim New Biscuit
+      all_posts: All Posts
+      your_biscuits: Your Biscuits
+      set_default: Set Default
+      edit_note: Edit Note
+      delete: Delete
+      freeze: Freeze
+      unfreeze: Unfreeze
+      note_placeholder: Add a note...
+      confirm_delete: Delete this biscuit? Posts will remain visible.
+
+    freeze_modal:
+      title: Slot Reduction - Freeze Biscuits
+      description: "Your biscuit slots have been reduced from {old} to {new}. Please select {count} biscuit(s) to freeze. Frozen biscuits cannot be used for posting until unfrozen."
+      submit: Confirm Freeze
+      still_need: "Still need to select {count} biscuit(s)"
+      ready: Ready to submit
+
+    phone:
+      label: Phone Number
+      send_code: Send Code
+      resend: "Resend ({seconds}s)"
+      verify_code: Verification Code

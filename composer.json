@@ -1,0 +1,62 @@
+{
+    "name": "huihu/flarum-anonymous",
+    "description": "Turn Flarum into an anonymous community with biscuit identities.",
+    "type": "flarum-extension",
+    "keywords": [
+        "anonymous",
+        "biscuit"
+    ],
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Huihu\\Anonymous\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Huihu\\Anonymous\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        },
+        "flarum-extension": {
+            "title": "Anonymous Community",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-user-secret",
+                "backgroundColor": "#238c59",
+                "color": "#fff"
+            }
+        },
+        "flarum-cli": {
+            "modules": {
+                "admin": true,
+                "forum": true,
+                "js": true,
+                "jsCommon": true,
+                "css": true,
+                "gitConf": false,
+                "githubActions": false,
+                "prettier": false,
+                "typescript": false,
+                "bundlewatch": false,
+                "backendTesting": false,
+                "editorConfig": false,
+                "styleci": false
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../*/*"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
