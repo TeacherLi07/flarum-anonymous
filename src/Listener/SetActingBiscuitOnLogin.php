@@ -3,14 +3,14 @@
 namespace TeacherLi07\Anonymous\Listener;
 
 use Flarum\User\Event\LoggedIn;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Session\Store;
 use TeacherLi07\Anonymous\AccountBiscuit;
 
 class SetActingBiscuitOnLogin
 {
     protected $session;
 
-    public function __construct(Session $session)
+    public function __construct(Store $session)
     {
         $this->session = $session;
     }

@@ -4,7 +4,7 @@ namespace TeacherLi07\Anonymous\Listener;
 
 use Flarum\User\Event\Registered;
 use Flarum\User\User;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Session\Store;
 use TeacherLi07\Anonymous\AccountBiscuit;
 use TeacherLi07\Anonymous\BiscuitGenerator;
 
@@ -13,7 +13,7 @@ class CreateInitialBiscuit
     protected $generator;
     protected $session;
 
-    public function __construct(BiscuitGenerator $generator, Session $session)
+    public function __construct(BiscuitGenerator $generator, Store $session)
     {
         $this->generator = $generator;
         $this->session = $session;

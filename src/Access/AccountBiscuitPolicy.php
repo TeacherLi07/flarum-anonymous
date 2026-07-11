@@ -4,14 +4,14 @@ namespace TeacherLi07\Anonymous\Access;
 
 use Flarum\User\Access\AbstractPolicy;
 use Flarum\User\User;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Session\Store;
 use Illuminate\Support\Carbon;
 
 class AccountBiscuitPolicy extends AbstractPolicy
 {
     protected $session;
 
-    public function __construct(Session $session)
+    public function __construct(Store $session)
     {
         $this->session = $session;
     }
