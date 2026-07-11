@@ -4,18 +4,10 @@ namespace TeacherLi07\Anonymous\Access;
 
 use Flarum\User\Access\AbstractPolicy;
 use Flarum\User\User;
-use Illuminate\Session\Store;
 use Illuminate\Support\Carbon;
 
 class AccountBiscuitPolicy extends AbstractPolicy
 {
-    protected $session;
-
-    public function __construct(Store $session)
-    {
-        $this->session = $session;
-    }
-
     public function claimBiscuit(User $actor): ?string
     {
         if ($actor->isGuest()) {
@@ -35,7 +27,7 @@ class AccountBiscuitPolicy extends AbstractPolicy
             return $this->deny();
         }
 
-        $accountUserId = $this->session->get('account_id');
+        $accountUserId = resolve('session')->get('account_id');
 
         if ($accountUserId && (int) $biscuit->account_user_id === (int) $accountUserId) {
             return null;

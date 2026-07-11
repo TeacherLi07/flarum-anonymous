@@ -4,19 +4,16 @@ namespace TeacherLi07\Anonymous\Listener;
 
 use Flarum\User\Event\Registered;
 use Flarum\User\User;
-use Illuminate\Session\Store;
 use TeacherLi07\Anonymous\AccountBiscuit;
 use TeacherLi07\Anonymous\BiscuitGenerator;
 
 class CreateInitialBiscuit
 {
     protected $generator;
-    protected $session;
 
-    public function __construct(BiscuitGenerator $generator, Store $session)
+    public function __construct(BiscuitGenerator $generator)
     {
         $this->generator = $generator;
-        $this->session = $session;
     }
 
     public function handle(Registered $event): void
@@ -37,7 +34,7 @@ class CreateInitialBiscuit
             'is_active' => true,
         ]);
 
-        $this->session->put('active_biscuit_user_id', $biscuitUser->id);
+        resolve('session')->put('active_biscuit_user_id', $biscuitUser->id);
     }
 
     protected function generateUniqueBiscuitString(): string
