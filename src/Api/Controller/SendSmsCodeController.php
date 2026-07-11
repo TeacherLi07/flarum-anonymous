@@ -20,6 +20,12 @@ class SendSmsCodeController implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getParsedBody();
+
+        if (! is_array($body)) {
+            $raw = (string) $request->getBody();
+            $body = json_decode($raw, true) ?: [];
+        }
+
         $phone = $body['phone'] ?? null;
 
         if (! $phone) {
