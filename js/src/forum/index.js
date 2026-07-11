@@ -24,6 +24,7 @@ import BiscuitLabel from './components/BiscuitLabel';
 import BiscuitSelector from './components/BiscuitSelector';
 import FreezeBiscuitModal from './components/FreezeBiscuitModal';
 import PhoneRegisterForm from './components/PhoneRegisterForm';
+import BiscuitIdenticon from './components/BiscuitIdenticon';
 
 app.initializers.add('teacherli07-anonymous', function (app) {
     app.store.models.biscuits = Biscuit;
@@ -53,22 +54,16 @@ app.initializers.add('teacherli07-anonymous', function (app) {
         return original(user);
     });
 
-    // Replace PostUser linkChildren to show biscuit avatar + biscuit name
+    // Replace PostUser linkChildren to show biscuit identicon + biscuit name
     override(PostUser.prototype, 'linkChildren', function (original, user) {
         const items = original(user);
         const post = this.attrs.post;
         const biscuitString = post && post.biscuitString ? post.biscuitString() : null;
 
         if (biscuitString) {
-            const firstChar = biscuitString.charAt(0).toUpperCase();
-            const hash = biscuitString.split('').reduce((h, c) => c.charCodeAt(0) + ((h << 5) - h), 0);
-            const hue = Math.abs(hash) % 360;
-
             items.remove('avatar');
             items.add('avatar', (
-                <span className="BiscuitPostAvatar" style={'background-color: hsl(' + hue + ', 45%, 55%); color: #fff;'}>
-                    {firstChar}
-                </span>
+                <BiscuitIdenticon biscuitString={biscuitString} size={36} />
             ), 100);
 
             items.remove('username');

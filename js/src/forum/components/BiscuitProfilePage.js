@@ -2,6 +2,7 @@ import Page from 'flarum/common/components/Page';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 import listItems from 'flarum/common/helpers/listItems';
+import BiscuitIdenticon from './BiscuitIdenticon';
 
 export default class BiscuitProfilePage extends Page {
     oninit(vnode) {
@@ -51,7 +52,6 @@ export default class BiscuitProfilePage extends Page {
 
     view() {
         const bs = this.biscuitString;
-        const firstChar = bs.charAt(0).toUpperCase();
         const hash = bs.split('').reduce((h, c) => c.charCodeAt(0) + ((h << 5) - h), 0);
         const hue = Math.abs(hash) % 360;
 
@@ -61,9 +61,7 @@ export default class BiscuitProfilePage extends Page {
                     <div className="darkenBackground">
                         <div className="container">
                             <div className="BiscuitHero-identity">
-                                <span className="BiscuitHero-avatar" style={'background-color: hsl(' + hue + ', 45%, 55%); color: #fff'}>
-                                    {firstChar}
-                                </span>
+                                <BiscuitIdenticon biscuitString={bs} size={64} />
                                 <h2 className="BiscuitHero-name">{bs}</h2>
                             </div>
                             {!this.loading ? (
