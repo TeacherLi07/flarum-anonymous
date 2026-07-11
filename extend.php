@@ -81,6 +81,10 @@ return [
             Middleware\RestrictLoginIdentification::class
         ),
 
+    // CSRF exclusion for public endpoints
+    (new Extend\Csrf())
+        ->exemptRoute('sms.send'),
+
     // Forum Serializer extensions
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attribute('needBiscuitFreeze', function ($serializer) {
