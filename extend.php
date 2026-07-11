@@ -155,6 +155,9 @@ return [
             }
         }),
 
+    (new Extend\ApiController(FlarumController\ListDiscussionsController::class))
+        ->addInclude('lastPostedPost'),
+
     (new Extend\Settings())
         ->serializeToForum('slotDaysRequired', 'anonymous.slot_days_required', null, '7')
         ->serializeToForum('slotPostsRequired', 'anonymous.slot_posts_required', null, '30')

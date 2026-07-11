@@ -20,7 +20,7 @@ class ListDiscussionsByBiscuitController extends AbstractListController
 {
     public $serializer = DiscussionSerializer::class;
 
-    public $include = ['user', 'lastPostedUser', 'firstPost', 'tags'];
+    public $include = ['user', 'lastPostedUser', 'firstPost', 'lastPostedPost', 'tags'];
 
     protected function data(ServerRequestInterface $request, Document $document)
     {
