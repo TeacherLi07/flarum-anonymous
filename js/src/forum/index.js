@@ -41,16 +41,6 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
     app.routes.biscuitProfile = { path: '/b/:biscuitString', component: BiscuitProfilePage };
 
-    // Replace avatar helper: show identicon for users with biscuits
-    override(avatar, function (original, user, attrs) {
-        const biscuitString = user && user.displayName ? user.displayName() : null;
-        if (biscuitString) {
-            const size = (attrs && attrs.className && attrs.className.indexOf('PostUser-avatar') !== -1) ? 36 : 32;
-            return <BiscuitIdenticon biscuitString={biscuitString} size={size} />;
-        }
-        return original(user, attrs);
-    });
-
     // Replace username helper - show biscuit string instead
     override(username, function (original, user) {
         if (user && user.displayName && user.displayName()) {
@@ -121,7 +111,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
         return vdom;
     });
 
-    // Helper: replace /u/* links with biscuit-specific /b/* links in DiscussionListItem
+    // Helper: replace /u/* links and avatar spans with biscuit identicons
     DiscussionListItem.prototype.replaceBiscuitLinks = function (vnode, opBiscuit, lastBiscuit) {
         if (!vnode || typeof vnode === 'string' || typeof vnode === 'number') return;
 
@@ -138,10 +128,22 @@ app.initializers.add('teacherli07-anonymous', function (app) {
             }
         }
 
-        if (vnode.attrs && vnode.attrs.href && typeof vnode.attrs.href === 'string') {
-            const href = vnode.attrs.href;
-            if (href.startsWith('/u/') && lastBiscuit) {
-                vnode.attrs.href = app.route('biscuitProfile', { biscuitString: lastBiscuit });
+        if (vnode.attrs) {
+            // Replace /u/ links with /b/ links
+            if (vnode.attrs.href && typeof vnode.attrs.href === 'string' && vnode.attrs.href.startsWith('/u/')) {
+                const targetBiscuit = lastBiscuit || opBiscuit;
+                if (targetBiscuit) {
+                    vnode.attrs.href = app.route('biscuitProfile', { biscuitString: targetBiscuit });
+                }
+            }
+            // Replace avatar span with identicon
+            if (vnode.attrs.className && vnode.attrs.className.indexOf('Avatar') !== -1) {
+                const targetBiscuit = lastBiscuit || opBiscuit;
+                if (targetBiscuit) {
+                    vnode.tag = BiscuitIdenticon;
+                    vnode.attrs = { biscuitString: targetBiscuit, size: 32 };
+                    delete vnode.children;
+                }
             }
         }
     };
