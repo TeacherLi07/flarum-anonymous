@@ -50,11 +50,7 @@ return [
         ->post('/session/acting', 'session.acting', Controller\SwitchActingBiscuitController::class)
         ->post('/account/bind-phone', 'account.bind-phone', Controller\BindPhoneController::class),
 
-    // Forum Routes
-    (new Extend\Routes('forum'))
-        ->get('/biscuits', 'biscuits.manager', function () {
-            return new \Laminas\Diactoros\Response\RedirectResponse('/');
-        }),
+    // Forum Routes - /biscuits is handled by frontend SPA router
 
     // Event Listeners
     (new Extend\Event())
