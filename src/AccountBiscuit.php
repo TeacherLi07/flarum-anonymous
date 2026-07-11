@@ -14,6 +14,8 @@ class AccountBiscuit extends AbstractModel
 
     protected $dates = ['deleted_at'];
 
+    protected $guarded = [];
+
     protected $casts = [
         'is_active' => 'bool',
         'is_frozen' => 'bool',
