@@ -75,7 +75,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
 
     // Add biscuit manager link to user dropdown
     extend(IndexPage.prototype, 'sidebarItems', function (items) {
-        if (app.session.user && !app.session.user.isGuest()) {
+        if (app.session.user) {
             items.add('biscuits',
                 Link.component({
                     href: app.route('biscuits'),
@@ -88,7 +88,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
 
     // Add biscuit selector to composer
     extend(ComposerBody.prototype, 'headerItems', function (items) {
-        if (app.session.user && !app.session.user.isGuest()) {
+        if (app.session.user) {
             items.add('biscuitSelector', BiscuitSelector.component(), 5);
         }
     });
@@ -106,7 +106,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     });
 
     // Freeze modal check on boot
-    if (app.forum.attribute('needBiscuitFreeze')) {
+    if (app.forum && app.forum.attribute('needBiscuitFreeze')) {
         setTimeout(function () {
             app.modal.show(FreezeBiscuitModal);
         }, 500);
