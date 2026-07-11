@@ -28,6 +28,7 @@ class BiscuitSerializer extends AbstractSerializer
             'biscuitString' => $biscuit->biscuit_string,
             'isDefault'     => (bool) $biscuit->is_default,
             'isFrozen'      => (bool) $biscuit->is_frozen,
+            'isDeleted'     => $biscuit->trashed(),
             'canDelete'     => $this->actor->can('delete', $biscuit),
             'canEdit'       => $this->actor->can('edit', $biscuit),
             'createdAt'     => $this->formatDate($biscuit->created_at),

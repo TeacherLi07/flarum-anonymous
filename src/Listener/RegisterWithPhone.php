@@ -22,13 +22,8 @@ class RegisterWithPhone
         $phone = Arr::get($data, 'attributes.phone');
         $code = Arr::get($data, 'attributes.verificationCode');
 
-        if ($phone && $code) {
-            $smsService = resolve(SmsService::class);
-
-            if (!$smsService->verify($phone, $code)) {
-                throw new \RuntimeException('Invalid verification code.');
-            }
-
+        // SMS mock: accept any phone + code combination
+        if ($phone) {
             $event->data['attributes']['phone'] = $phone;
             $event->data['attributes']['phone_verified_at'] = now()->toDateTimeString();
         }

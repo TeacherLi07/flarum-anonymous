@@ -21,7 +21,7 @@ export default class FreezeBiscuitModal extends Modal {
 
     loadBiscuits() {
         app.store.find('biscuits').then(biscuits => {
-            this.biscuits = biscuits.filter(b => !b.deletedAt() && !b.isFrozen());
+            this.biscuits = biscuits.filter(b => !b.isDeleted() && !b.isFrozen());
             const slots = app.forum.attribute('slotMax') || 5;
             this.requiredCount = Math.max(0, this.biscuits.length - slots);
             m.redraw();

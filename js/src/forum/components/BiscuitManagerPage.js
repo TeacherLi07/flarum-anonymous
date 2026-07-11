@@ -23,7 +23,7 @@ export default class BiscuitManagerPage extends Page {
             app.store.find('discussions', { sort: '-lastPostedAt', filter: { author: app.session.user.id() } }),
         ]).then(([biscuits]) => {
             this.biscuits = biscuits;
-            const activeCount = biscuits.filter(b => !b.deletedAt() && !b.isFrozen()).length;
+            const activeCount = biscuits.filter(b => !b.isDeleted() && !b.isFrozen()).length;
             this.showClaimButton = activeCount < this.slots;
             this.loading = false;
             m.redraw();
@@ -35,7 +35,7 @@ export default class BiscuitManagerPage extends Page {
             return <LoadingIndicator />;
         }
 
-        const activeCount = this.biscuits.filter(b => !b.deletedAt() && !b.isFrozen()).length;
+        const activeCount = this.biscuits.filter(b => !b.isDeleted() && !b.isFrozen()).length;
 
         return (
             <div className="BiscuitManagerPage">

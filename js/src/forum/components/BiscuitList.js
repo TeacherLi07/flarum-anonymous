@@ -30,8 +30,8 @@ export default class BiscuitList extends Component {
         return (
             <div className="BiscuitList">
                 {this.biscuits.map(biscuit => {
-                    const isActive = !biscuit.deletedAt() && !biscuit.isFrozen();
-                    const isDeleted = !!biscuit.deletedAt();
+                    const isActive = !biscuit.isDeleted() && !biscuit.isFrozen();
+                    const isDeleted = !!biscuit.isDeleted();
                     const isSelected = selectedIds && selectedIds.indexOf(biscuit.id()) !== -1;
 
                     return (

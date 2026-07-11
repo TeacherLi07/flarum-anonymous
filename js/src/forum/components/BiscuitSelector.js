@@ -12,7 +12,7 @@ export default class BiscuitSelector extends Component {
 
     loadBiscuits() {
         app.store.find('biscuits').then(biscuits => {
-            this.biscuits = biscuits.filter(b => !b.isFrozen() && !b.deletedAt());
+            this.biscuits = biscuits.filter(b => !b.isFrozen() && !b.isDeleted());
             if (this.biscuits.length > 0) {
                 const defaultBiscuit = this.biscuits.find(b => b.isDefault());
                 this.selected = defaultBiscuit || this.biscuits[0];

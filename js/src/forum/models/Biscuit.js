@@ -6,6 +6,7 @@ export default class Biscuit extends mixin(Model, {
     note:          Model.attribute('note'),
     isDefault:     Model.attribute('isDefault'),
     isFrozen:      Model.attribute('isFrozen'),
+    isDeleted:     Model.attribute('isDeleted'),
     canDelete:     Model.attribute('canDelete'),
     canEdit:       Model.attribute('canEdit'),
     createdAt:     Model.attribute('createdAt', Model.transformDate),
