@@ -12,17 +12,8 @@ export default class BiscuitProfilePage extends Page {
     }
 
     load() {
-        const params = {
-            filter: { biscuit: this.biscuitString },
-            sort: '-lastPostedAt',
-        };
-
-        const queryString = Object.entries(params.filter)
-            .map(([k, v]) => `filter[${encodeURIComponent(k)}]=${encodeURIComponent(v)}`)
-            .join('&');
-
         app.request({
-            url: app.forum.attribute('apiUrl') + '/discussions?' + queryString + '&sort=-lastPostedAt',
+            url: app.forum.attribute('apiUrl') + '/biscuits/0/discussions?filter[biscuit]=' + encodeURIComponent(this.biscuitString),
             method: 'GET',
         }).then(response => {
             const data = app.store.pushPayload(response);
@@ -43,7 +34,7 @@ export default class BiscuitProfilePage extends Page {
                         <h2>{this.biscuitString}</h2>
                     </div>
                     {this.loading ? <LoadingIndicator /> : this.discussions.length === 0 ? (
-                        <p>{app.translator.trans('core.forum.post_stream.empty_text') || 'Nothing here...'}</p>
+                        <p>Nothing here...</p>
                     ) : (
                         <div className="DiscussionList">
                             {this.discussions.map(discussion => (

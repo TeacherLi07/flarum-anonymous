@@ -67,6 +67,9 @@ return [
         
     (new Extend\Routes('api'))
         ->patch('/biscuits/batch/freeze', 'biscuits.freeze', Controller\BatchFreezeBiscuitsController::class),
+        
+    (new Extend\Routes('api'))
+        ->get('/biscuits/{id}/discussions', 'biscuits.discussions', Controller\ListDiscussionsByBiscuitController::class),
 
     (new Extend\Routes('api'))
         ->post('/sms/send', 'sms.send', Controller\SendSmsCodeController::class),
