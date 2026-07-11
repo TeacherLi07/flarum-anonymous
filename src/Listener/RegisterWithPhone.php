@@ -32,9 +32,10 @@ class RegisterWithPhone
             $user->phone_verified_at = Carbon::now();
         }
 
-        // Auto-generate UUID as username if not provided
+        // Auto-generate UUID-based username if not provided (max 30 chars)
         if (empty($user->username)) {
-            $user->username = (string) Str::uuid();
+            $user->username = str_replace('-', '', (string) Str::uuid());
+            $user->username = substr($user->username, 0, 30);
         }
     }
 }
