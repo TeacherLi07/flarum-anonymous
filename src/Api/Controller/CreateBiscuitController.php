@@ -32,7 +32,7 @@ class CreateBiscuitController extends AbstractCreateController
         $usableCount = Biscuit::where('user_id', $actor->id)->usable()->count();
 
         if ($usableCount >= $available) {
-            throw new \RuntimeException('No available biscuit slots. Wait for more posts or days to unlock.');
+            throw new \Flarum\Foundation\ValidationException(['biscuits' => 'No available biscuit slots.']);
         }
 
         $generator = resolve(BiscuitGenerator::class);
