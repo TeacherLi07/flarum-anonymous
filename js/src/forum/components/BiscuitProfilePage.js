@@ -1,6 +1,7 @@
 import Page from 'flarum/common/components/Page';
 import DiscussionList from 'flarum/forum/components/DiscussionList';
 import DiscussionListState from 'flarum/forum/states/DiscussionListState';
+import PaginatedListState from 'flarum/common/states/PaginatedListState';
 
 export default class BiscuitProfilePage extends Page {
     oninit(vnode) {
@@ -12,18 +13,8 @@ export default class BiscuitProfilePage extends Page {
             sort: '-lastPostedAt',
         });
 
-        // Override loadPage to bypass preloaded data
-        const originalLoadPage = this.discussionListState.loadPage.bind(this.discussionListState);
-        this.discussionListState.loadPage = (page) => {
-            return app.store.find('discussions', {
-                filter: { biscuit: this.biscuitString },
-                sort: '-lastPostedAt',
-                page: { offset: 0, limit: 20 },
-            }).then(payload => {
-                this.discussionListState.pushPayload(payload);
-                return payload;
-            });
-        };
+        // Bypass preloaded data by calling parent class loadPage directly
+        this.discussionListState.loadPage = PaginatedListState.prototype.loadPage;
 
         this.discussionListState.refresh();
     }
