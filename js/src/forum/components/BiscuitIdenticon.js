@@ -9,7 +9,8 @@ export default class BiscuitIdenticon extends Component {
         const fg = 'hsl(' + hue + ', 55%, 40%)';
         const bg = 'hsl(' + hue + ', 20%, 90%)';
 
-        const cellSize = s / 5;
+        const gap = s * 0.05;
+        const cellSize = (s - gap * 6) / 5;
         const rects = [];
 
         for (let row = 0; row < 5; row++) {
@@ -17,13 +18,14 @@ export default class BiscuitIdenticon extends Component {
                 const idx = row * 3 + col;
                 const byte = (hash >> (idx * 2)) & 3;
                 if (byte >= 1) {
-                    const x = col * cellSize;
-                    const y = row * cellSize;
+                    const x = gap + col * (cellSize + gap);
+                    const y = gap + row * (cellSize + gap);
+                    const rx = cellSize * 0.1;
                     rects.push(
-                        <rect key={row + '-' + col} x={x} y={y} width={cellSize} height={cellSize} fill={fg} rx={cellSize * 0.12} />
+                        <rect key={row + '-' + col} x={x} y={y} width={cellSize} height={cellSize} fill={fg} rx={rx} />
                     );
                     rects.push(
-                        <rect key={row + '-' + (4-col)} x={(4 - col) * cellSize} y={y} width={cellSize} height={cellSize} fill={fg} rx={cellSize * 0.12} />
+                        <rect key={row + '-' + (4-col)} x={gap + (4 - col) * (cellSize + gap)} y={y} width={cellSize} height={cellSize} fill={fg} rx={rx} />
                     );
                 }
             }
