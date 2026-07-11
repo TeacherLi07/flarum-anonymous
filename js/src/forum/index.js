@@ -30,11 +30,17 @@ class BiscuitManagerPage extends Component {
 
   reload() {
     this.loading = true;
-    app.store.find('account-biscuits').then(() => {
-      this.biscuits = app.store.all('account-biscuits');
+    app.request({
+      method: 'GET',
+      url: app.forum.attribute('apiUrl') + '/account/biscuits',
+    }).then(response => {
+      this.biscuits = app.store.pushPayload(response).filter(b => b instanceof AccountBiscuit);
       this.loading = false;
       m.redraw();
-    }).catch(() => { this.loading = false; m.redraw(); });
+    }).catch(err => {
+      this.loading = false;
+      m.redraw();
+    });
   }
 
   view() {
