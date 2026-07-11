@@ -1,11 +1,8 @@
 {
     "name": "teacherli07/flarum-anonymous",
-    "description": "Turn Flarum into an anonymous community with biscuit identities.",
+    "description": "Anonymous community extension for Flarum.",
     "type": "flarum-extension",
-    "keywords": [
-        "anonymous",
-        "biscuit"
-    ],
+    "keywords": ["anonymous"],
     "license": "MIT",
     "require": {
         "flarum/core": "^1.8"
@@ -15,15 +12,7 @@
             "TeacherLi07\\Anonymous\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "TeacherLi07\\Anonymous\\Tests\\": "tests/"
-        }
-    },
     "extra": {
-        "branch-alias": {
-            "dev-main": "1.x-dev"
-        },
         "flarum-extension": {
             "title": "Anonymous Community",
             "category": "feature",
@@ -31,23 +20,6 @@
                 "name": "fas fa-user-secret",
                 "backgroundColor": "#238c59",
                 "color": "#fff"
-            }
-        },
-        "flarum-cli": {
-            "modules": {
-                "admin": true,
-                "forum": true,
-                "js": true,
-                "jsCommon": true,
-                "css": true,
-                "gitConf": false,
-                "githubActions": false,
-                "prettier": false,
-                "typescript": false,
-                "bundlewatch": false,
-                "backendTesting": false,
-                "editorConfig": false,
-                "styleci": false
             }
         }
     }
