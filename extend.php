@@ -138,8 +138,11 @@ return [
             return optional($discussion->firstPost)->biscuit_string;
         })
         ->attribute('lastPostedBiscuitString', function (DiscussionSerializer $serializer, $discussion) {
-            return optional($discussion->lastPostedPost)->biscuit_string
-                ?? optional($discussion->firstPost)->biscuit_string;
+            $lastPost = \Flarum\Post\Post::where('discussion_id', $discussion->id)
+                ->whereNotNull('biscuit_string')
+                ->orderBy('number', 'desc')
+                ->first();
+            return $lastPost ? $lastPost->biscuit_string : null;
         }),
 
     (new Extend\ApiController(FlarumController\ShowDiscussionController::class))
@@ -154,9 +157,6 @@ return [
                 $document->addMeta('lastUsedBiscuitString', $lastPost ? $lastPost->biscuit_string : null);
             }
         }),
-
-    (new Extend\ApiController(FlarumController\ListDiscussionsController::class))
-        ->addInclude('lastPostedPost'),
 
     (new Extend\Settings())
         ->serializeToForum('slotDaysRequired', 'anonymous.slot_days_required', null, '7')
