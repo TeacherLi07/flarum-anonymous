@@ -170,15 +170,86 @@
 }
 
 .BiscuitProfilePage {
-    &-header {
-        text-align: center;
-        padding: 30px 0 20px;
+    &-navTitle {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--muted-color);
+        margin: 0;
+        padding: 8px 0;
+    }
+}
 
-        h2 {
-            font-family: monospace;
-            font-size: 24px;
-            letter-spacing: 2px;
-        }
+.BiscuitHero {
+    --hero-bg: var(--primary-color, #4D698E);
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 0;
+    margin-bottom: 20px;
+
+    .darkenBackground {
+        background: rgba(0,0,0,0.1);
+        padding: 20px 0 15px;
+    }
+
+    .container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    &-identity {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    &-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        font-size: 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: 3px solid rgba(255,255,255,0.3);
+    }
+
+    &-name {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0;
+        font-family: monospace;
+        letter-spacing: 1px;
+    }
+
+    &-stats {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &-stat {
+        text-align: center;
+    }
+
+    &-stat-value {
+        display: block;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    &-stat-label {
+        display: block;
+        font-size: 12px;
+        opacity: 0.8;
+        margin-top: 2px;
     }
 }
 

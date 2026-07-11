@@ -35,6 +35,11 @@ teacherli07-anonymous:
       still_need: "Still need to select {count} biscuit(s)"
       ready: Ready to submit
 
+    profile:
+      birthday: Born
+      posts_count: Posts
+      discussions: Discussions
+
     phone:
       label: Phone Number
       send_code: Send Code

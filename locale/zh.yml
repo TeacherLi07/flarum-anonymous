@@ -35,6 +35,11 @@ teacherli07-anonymous:
       still_need: "仍需选择 {count} 个"
       ready: 已满足，可以提交
 
+    profile:
+      birthday: 出生
+      posts_count: 发言
+      discussions: 讨论列表
+
     phone:
       label: 手机号
       send_code: 发送验证码
