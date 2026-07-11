@@ -8,6 +8,7 @@
  */
 
 use Flarum\Api\Controller as FlarumController;
+use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Api\Serializer\PostSerializer;
@@ -62,6 +63,15 @@ return [
         ->attribute('canManageBiscuits', function (ForumSerializer $serializer) {
             $actor = $serializer->getActor();
             return $actor && !$actor->isGuest();
+        }),
+
+    (new Extend\ApiSerializer(BasicUserSerializer::class))
+        ->attribute('displayName', function (BasicUserSerializer $serializer, $user) {
+            $default = Biscuit::where('user_id', $user->id)
+                ->where('is_default', true)
+                ->whereNull('deleted_at')
+                ->first();
+            return $default ? $default->biscuit_string : null;
         }),
 
     (new Extend\ApiSerializer(UserSerializer::class))
