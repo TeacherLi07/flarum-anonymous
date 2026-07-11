@@ -15,8 +15,10 @@ export default class BiscuitManagerPage extends Page {
         this.slots = app.forum.attribute('biscuitSlots') || 1;
         this.showClaimButton = false;
 
+        const userId = app.session.user ? app.session.user.id() : null;
+
         this.discussionListState = new DiscussionListState({
-            filter: { author: app.session.user.id() },
+            filter: userId ? { author: userId } : {},
             sort: '-lastPostedAt',
         });
 
