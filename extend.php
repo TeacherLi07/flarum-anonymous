@@ -83,7 +83,8 @@ return [
 
     // CSRF exclusion for public endpoints
     (new Extend\Csrf())
-        ->exemptRoute('sms.send'),
+        ->exemptRoute('sms.send')
+        ->exemptRoute('anonymous.register'),
 
     // Forum Serializer extensions
     (new Extend\ApiSerializer(ForumSerializer::class))

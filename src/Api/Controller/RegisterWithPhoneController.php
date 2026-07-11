@@ -28,7 +28,13 @@ class RegisterWithPhoneController extends AbstractCreateController
     protected function data(ServerRequestInterface $request, $document)
     {
         $body = $request->getParsedBody();
-        $attributes = Arr::get($body, 'data.attributes', []);
+
+        if (! is_array($body)) {
+            $raw = (string) $request->getBody();
+            $body = json_decode($raw, true) ?: [];
+        }
+
+        $attributes = $body['phone'] ? $body : ($body['data']['attributes'] ?? $body);
 
         $phone = $attributes['phone'] ?? null;
         $code = $attributes['verificationCode'] ?? null;
