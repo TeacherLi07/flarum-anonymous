@@ -18,6 +18,8 @@ class ActorSwapMiddleware implements MiddlewareInterface
 
         if (! $actor->isGuest() && ! empty($actor->is_anonymous_account)) {
             $session = $request->getAttribute('session');
+            $session->put('account_id', $actor->id);
+
             $activeBiscuitUserId = $session->get('active_biscuit_user_id');
 
             if (! $activeBiscuitUserId) {
