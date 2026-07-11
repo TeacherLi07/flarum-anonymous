@@ -56,7 +56,8 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     // Replace PostUser linkChildren to show biscuit avatar + biscuit name
     override(PostUser.prototype, 'linkChildren', function (original, user) {
         const items = original(user);
-        const biscuitString = user && user.displayName ? user.displayName() : null;
+        const post = this.attrs.post;
+        const biscuitString = post && post.biscuitString ? post.biscuitString() : null;
 
         if (biscuitString) {
             const firstChar = biscuitString.charAt(0).toUpperCase();
@@ -82,7 +83,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     // Replace PostUser userViewItems to link to biscuit profile + remove user card
     override(PostUser.prototype, 'userViewItems', function (original, user, post) {
         const items = original(user, post);
-        const biscuitString = user && user.displayName ? user.displayName() : null;
+        const biscuitString = post && post.biscuitString ? post.biscuitString() : null;
 
         if (biscuitString) {
             const nameItem = items.get('postUser-name');
@@ -97,9 +98,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
             }
         }
 
-        // Remove user card popup - it leaks real user info (login time, join date, etc.)
         items.remove('postUser-card');
-
         return items;
     });
 
