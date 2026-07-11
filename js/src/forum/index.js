@@ -32,7 +32,7 @@ class BiscuitManagerPage extends Component {
     this.loading = true;
     app.request({
       method: 'GET',
-      url: app.forum.attribute('apiUrl') + '/account/biscuits',
+      url: app.forum.attribute('apiUrl') + '/account-biscuits',
     }).then(response => {
       this.biscuits = app.store.pushPayload(response).filter(b => b instanceof AccountBiscuit);
       this.loading = false;
@@ -113,7 +113,7 @@ class BiscuitManagerPage extends Component {
 
   claimBiscuit() {
     this.claiming = true;
-    app.request({ method: 'POST', url: app.forum.attribute('apiUrl') + '/account/biscuits' }).then(() => {
+    app.request({ method: 'POST', url: app.forum.attribute('apiUrl') + '/account-biscuits' }).then(() => {
       this.claiming = false;
       this.reload();
     }).catch(() => { this.claiming = false; m.redraw(); });

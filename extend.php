@@ -42,12 +42,12 @@ return [
     (new Extend\Routes('api'))
         ->post('/anonymous/register', 'anonymous.register', Controller\RegisterWithPhoneController::class)
         ->post('/sms/send', 'sms.send', Controller\SendSmsCodeController::class)
-        ->get('/account/biscuits', 'account.biscuits.index', Controller\ListAccountBiscuitsController::class)
-        ->post('/account/biscuits', 'account.biscuits.create', Controller\CreateAccountBiscuitController::class)
-        ->get('/account/biscuits/{id}', 'account.biscuits.show', Controller\ShowAccountBiscuitController::class)
-        ->patch('/account/biscuits/{id}', 'account.biscuits.update', Controller\UpdateAccountBiscuitController::class)
-        ->delete('/account/biscuits/{id}', 'account.biscuits.delete', Controller\DeleteAccountBiscuitController::class)
-        ->patch('/account/biscuits/batch/freeze', 'account.biscuits.freeze', Controller\BatchFreezeAccountBiscuitsController::class)
+        ->get('/account-biscuits', 'account.biscuits.index', Controller\ListAccountBiscuitsController::class)
+        ->post('/account-biscuits', 'account.biscuits.create', Controller\CreateAccountBiscuitController::class)
+        ->get('/account-biscuits/{id}', 'account.biscuits.show', Controller\ShowAccountBiscuitController::class)
+        ->patch('/account-biscuits/{id}', 'account.biscuits.update', Controller\UpdateAccountBiscuitController::class)
+        ->delete('/account-biscuits/{id}', 'account.biscuits.delete', Controller\DeleteAccountBiscuitController::class)
+        ->patch('/account-biscuits/batch/freeze', 'account.biscuits.freeze', Controller\BatchFreezeAccountBiscuitsController::class)
         ->post('/session/acting', 'session.acting', Controller\SwitchActingBiscuitController::class)
         ->post('/account/bind-phone', 'account.bind-phone', Controller\BindPhoneController::class),
 
