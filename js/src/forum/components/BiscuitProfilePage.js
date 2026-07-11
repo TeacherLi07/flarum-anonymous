@@ -12,12 +12,24 @@ export default class BiscuitProfilePage extends Page {
     }
 
     load() {
-        app.store.find('discussions', {
+        const params = {
             filter: { biscuit: this.biscuitString },
             sort: '-lastPostedAt',
-            include: 'user,lastPostedUser,firstPost,tags',
-        }).then(payload => {
-            this.discussions = payload;
+        };
+
+        const queryString = Object.entries(params.filter)
+            .map(([k, v]) => `filter[${encodeURIComponent(k)}]=${encodeURIComponent(v)}`)
+            .join('&');
+
+        app.request({
+            url: app.forum.attribute('apiUrl') + '/discussions?' + queryString + '&sort=-lastPostedAt',
+            method: 'GET',
+        }).then(response => {
+            const data = app.store.pushPayload(response);
+            this.discussions = Array.isArray(data) ? data : [];
+            this.loading = false;
+            m.redraw();
+        }).catch(() => {
             this.loading = false;
             m.redraw();
         });
