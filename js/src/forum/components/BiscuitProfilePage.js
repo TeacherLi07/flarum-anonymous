@@ -12,7 +12,19 @@ export default class BiscuitProfilePage extends Page {
             sort: '-lastPostedAt',
         });
 
-        // Clear any preloaded data and force a fresh API call
+        // Override loadPage to bypass preloaded data
+        const originalLoadPage = this.discussionListState.loadPage.bind(this.discussionListState);
+        this.discussionListState.loadPage = (page) => {
+            return app.store.find('discussions', {
+                filter: { biscuit: this.biscuitString },
+                sort: '-lastPostedAt',
+                page: { offset: 0, limit: 20 },
+            }).then(payload => {
+                this.discussionListState.pushPayload(payload);
+                return payload;
+            });
+        };
+
         this.discussionListState.refresh();
     }
 
