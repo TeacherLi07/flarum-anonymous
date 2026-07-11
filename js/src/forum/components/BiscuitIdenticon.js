@@ -6,21 +6,24 @@ export default class BiscuitIdenticon extends Component {
         const s = size || 36;
         const hash = this.hashCode(biscuitString || '');
         const hue = Math.abs(hash) % 360;
-        const fg = 'hsl(' + hue + ', 50%, 45%)';
-        const bg = 'hsl(' + hue + ', 25%, 88%)';
-
-        const grid = this.generateGrid(hash);
+        const fg = 'hsl(' + hue + ', 55%, 40%)';
+        const bg = 'hsl(' + hue + ', 20%, 90%)';
 
         const cellSize = s / 5;
         const rects = [];
 
         for (let row = 0; row < 5; row++) {
-            for (let col = 0; col < 5; col++) {
-                if (grid[row][col]) {
+            for (let col = 0; col < 3; col++) {
+                const idx = row * 3 + col;
+                const byte = (hash >> (idx * 2)) & 3;
+                if (byte >= 1) {
                     const x = col * cellSize;
                     const y = row * cellSize;
                     rects.push(
-                        <rect key={row + '-' + col} x={x} y={y} width={cellSize} height={cellSize} fill={fg} rx={cellSize * 0.15} />
+                        <rect key={row + '-' + col} x={x} y={y} width={cellSize} height={cellSize} fill={fg} rx={cellSize * 0.12} />
+                    );
+                    rects.push(
+                        <rect key={row + '-' + (4-col)} x={(4 - col) * cellSize} y={y} width={cellSize} height={cellSize} fill={fg} rx={cellSize * 0.12} />
                     );
                 }
             }
@@ -35,27 +38,17 @@ export default class BiscuitIdenticon extends Component {
     }
 
     hashCode(str) {
-        let hash = 5381;
+        let h1 = 0xdeadbeef ^ str.length;
+        let h2 = 0x41c6ce57 ^ str.length;
         for (let i = 0; i < str.length; i++) {
-            hash = ((hash << 5) + hash) + str.charCodeAt(i);
-            hash = hash & hash;
+            const ch = str.charCodeAt(i);
+            h1 = Math.imul(h1 ^ ch, 2654435761);
+            h2 = Math.imul(h2 ^ ch, 1597334677);
         }
-        return hash;
-    }
-
-    generateGrid(seed) {
-        const grid = [];
-        let s = Math.abs(seed);
-
-        for (let row = 0; row < 5; row++) {
-            grid[row] = [];
-            for (let col = 0; col < 3; col++) {
-                s = (s * 1103515245 + 12345) & 0x7fffffff;
-                grid[row][col] = (s & 1) === 1;
-                grid[row][4 - col] = grid[row][col];
-            }
-        }
-
-        return grid;
+        h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+        h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+        h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+        h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+        return (h2 >>> 0) * 4096 + (h1 >>> 0);
     }
 }
