@@ -30,7 +30,8 @@ export default class BiscuitIdenticon extends Component {
         }
 
         return (
-            <svg className="BiscuitIdenticon" width={s} height={s} viewBox={'0 0 ' + s + ' ' + s} xmlns="http://www.w3.org/2000/svg">
+            <svg className="BiscuitIdenticon" width={s} height={s} viewBox={'0 0 ' + s + ' ' + s}
+                xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
                 <rect width={s} height={s} fill={bg} rx={s * 0.15} />
                 {rects}
             </svg>

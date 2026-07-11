@@ -41,6 +41,16 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
     app.routes.biscuitProfile = { path: '/b/:biscuitString', component: BiscuitProfilePage };
 
+    // Replace avatar helper: show identicon for users with biscuits
+    override(avatar, function (original, user, attrs) {
+        const biscuitString = user && user.displayName ? user.displayName() : null;
+        if (biscuitString) {
+            const size = (attrs && attrs.className && attrs.className.indexOf('PostUser-avatar') !== -1) ? 36 : 32;
+            return <BiscuitIdenticon biscuitString={biscuitString} size={size} />;
+        }
+        return original(user, attrs);
+    });
+
     // Replace username helper - show biscuit string instead
     override(username, function (original, user) {
         if (user && user.displayName && user.displayName()) {
