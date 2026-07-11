@@ -21,7 +21,7 @@ class UpdateAccountBiscuitController extends AbstractShowController
         $attributes = Arr::get($body, 'data.attributes', []);
 
         $biscuit = AccountBiscuit::withTrashed()->findOrFail($id);
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId || (int) $biscuit->account_user_id !== (int) $accountUserId) {
             if (! $actor->isAdmin()) {
@@ -42,7 +42,7 @@ class UpdateAccountBiscuitController extends AbstractShowController
                     ->update(['is_active' => false]);
 
                 $biscuit->is_active = true;
-                session()->put('active_biscuit_user_id', $biscuit->biscuit_user_id);
+                $request->getAttribute('session')->put('active_biscuit_user_id', $biscuit->biscuit_user_id);
             }
         }
 

@@ -17,7 +17,8 @@ class ActorSwapMiddleware implements MiddlewareInterface
         $actor = RequestUtil::getActor($request);
 
         if (! $actor->isGuest() && ! empty($actor->is_anonymous_account)) {
-            $activeBiscuitUserId = session('active_biscuit_user_id');
+            $session = $request->getAttribute('session');
+            $activeBiscuitUserId = $session->get('active_biscuit_user_id');
 
             if (! $activeBiscuitUserId) {
                 $defaultBiscuit = AccountBiscuit::where('account_user_id', $actor->id)
@@ -27,7 +28,7 @@ class ActorSwapMiddleware implements MiddlewareInterface
 
                 if ($defaultBiscuit) {
                     $activeBiscuitUserId = $defaultBiscuit->biscuit_user_id;
-                    session()->put('active_biscuit_user_id', $activeBiscuitUserId);
+                    $session->put('active_biscuit_user_id', $activeBiscuitUserId);
                 }
             }
 

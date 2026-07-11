@@ -8,7 +8,6 @@ use Flarum\User\User;
 use Illuminate\Support\Carbon;
 use Psr\Http\Message\ServerRequestInterface;
 use Flarum\Api\Serializer\CurrentUserSerializer;
-use Flarum\User\User;
 
 class BindPhoneController extends AbstractShowController
 {
@@ -17,7 +16,7 @@ class BindPhoneController extends AbstractShowController
     protected function data(ServerRequestInterface $request, $document)
     {
         $actor = RequestUtil::getActor($request);
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId) {
             throw new \Flarum\User\Exception\PermissionDeniedException();

@@ -15,7 +15,7 @@ class SwitchActingBiscuitController extends AbstractShowController
     protected function data(ServerRequestInterface $request, $document)
     {
         $actor = RequestUtil::getActor($request);
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId) {
             throw new \Flarum\User\Exception\PermissionDeniedException();
@@ -36,12 +36,12 @@ class SwitchActingBiscuitController extends AbstractShowController
             $biscuit->is_active = true;
             $biscuit->save();
 
-            session()->put('active_biscuit_user_id', $biscuit->biscuit_user_id);
+            $request->getAttribute('session')->put('active_biscuit_user_id', $biscuit->biscuit_user_id);
         } else {
             AccountBiscuit::where('account_user_id', $accountUserId)
                 ->update(['is_active' => false]);
 
-            session()->forget('active_biscuit_user_id');
+            $request->getAttribute('session')->forget('active_biscuit_user_id');
         }
 
         return $actor;

@@ -24,7 +24,7 @@ class DeleteAccountBiscuitController extends AbstractDeleteController
         $actor = RequestUtil::getActor($request);
 
         $biscuit = AccountBiscuit::findOrFail($id);
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId || (int) $biscuit->account_user_id !== (int) $accountUserId) {
             if (! $actor->isAdmin()) {
@@ -45,7 +45,7 @@ class DeleteAccountBiscuitController extends AbstractDeleteController
             if ($alternative) {
                 $alternative->is_active = true;
                 $alternative->save();
-                session()->put('active_biscuit_user_id', $alternative->biscuit_user_id);
+                $request->getAttribute('session')->put('active_biscuit_user_id', $alternative->biscuit_user_id);
             } else {
                 $biscuitString = $this->generateUniqueBiscuitString();
                 $biscuitUser = User::register(
@@ -62,7 +62,7 @@ class DeleteAccountBiscuitController extends AbstractDeleteController
                     'is_active' => true,
                 ]);
 
-                session()->put('active_biscuit_user_id', $biscuitUser->id);
+                $request->getAttribute('session')->put('active_biscuit_user_id', $biscuitUser->id);
             }
         }
     }

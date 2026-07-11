@@ -18,7 +18,7 @@ class ListAccountBiscuitsController extends AbstractListController
     {
         $actor = RequestUtil::getActor($request);
 
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId && ! $actor->isAdmin()) {
             return [];

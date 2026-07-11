@@ -90,7 +90,7 @@ return [
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attribute('needBiscuitFreeze', function ($serializer) {
             $actor = $serializer->getActor();
-            $accountUserId = session('account_id');
+            $accountUserId = resolve('session')->get('account_id');
 
             if (! $accountUserId) {
                 return false;
@@ -105,7 +105,7 @@ return [
             return resolve(SlotManager::class)->needsFreeze($accountUser);
         })
         ->attribute('needPhoneBinding', function ($serializer) {
-            $accountUserId = session('account_id');
+            $accountUserId = resolve('session')->get('account_id');
 
             if (! $accountUserId) {
                 return false;
@@ -116,13 +116,13 @@ return [
             return $accountUser && empty($accountUser->phone);
         })
         ->attribute('canManageBiscuits', function ($serializer) {
-            return session('account_id') !== null;
+            return resolve('session')->get('account_id') !== null;
         })
         ->attribute('activeBiscuitUserId', function ($serializer) {
-            return session('active_biscuit_user_id');
+            return resolve('session')->get('active_biscuit_user_id');
         })
         ->attribute('accountUserId', function ($serializer) {
-            return session('account_id');
+            return resolve('session')->get('account_id');
         }),
 
     // User Serializer - expose display name for biscuit users
@@ -133,17 +133,17 @@ return [
         ->attribute('phone', function ($serializer, $user) {
             $actor = $serializer->getActor();
 
-            if ($actor->isAdmin() || session('account_id') == $user->id) {
+            if ($actor->isAdmin() || resolve('session')->get('account_id') == $user->id) {
                 return $user->phone;
             }
 
             return null;
         })
         ->attribute('canManageBiscuits', function ($serializer, $user) {
-            return session('account_id') == $user->id;
+            return resolve('session')->get('account_id') == $user->id;
         })
         ->attribute('biscuitSlots', function ($serializer, $user) {
-            if (session('account_id') != $user->id) {
+            if (resolve('session')->get('account_id') != $user->id) {
                 return null;
             }
 

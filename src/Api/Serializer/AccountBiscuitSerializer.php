@@ -21,7 +21,7 @@ class AccountBiscuitSerializer extends AbstractSerializer
             'createdAt'     => $this->formatDate($biscuit->created_at),
         ];
 
-        $accountUserId = session('account_id');
+        $accountUserId = $this->request->getAttribute('session')->get('account_id');
 
         if ($accountUserId && (int) $accountUserId === (int) $biscuit->account_user_id) {
             $attrs['note'] = $biscuit->note;
@@ -41,7 +41,7 @@ class AccountBiscuitSerializer extends AbstractSerializer
             return false;
         }
 
-        $accountUserId = session('account_id');
+        $accountUserId = $this->request->getAttribute('session')->get('account_id');
 
         if ($accountUserId && (int) $biscuit->account_user_id === (int) $accountUserId) {
             return true;

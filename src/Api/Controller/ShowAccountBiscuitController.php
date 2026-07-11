@@ -21,7 +21,7 @@ class ShowAccountBiscuitController extends AbstractShowController
 
         $biscuit = AccountBiscuit::withTrashed()->findOrFail($id);
 
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId || (int) $biscuit->account_user_id !== (int) $accountUserId) {
             if (! $actor->isAdmin()) {

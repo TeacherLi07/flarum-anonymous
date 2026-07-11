@@ -67,7 +67,7 @@ class RegisterWithPhoneController extends AbstractCreateController
         $accountUser->joined_at = Carbon::now();
         $accountUser->save();
 
-        session()->put('account_id', $accountUser->id);
+        $request->getAttribute('session')->put('account_id', $accountUser->id);
 
         // CreateInitialBiscuit listener handles biscuit creation
         event(new \Flarum\User\Event\Registered($accountUser));

@@ -16,7 +16,7 @@ class BatchFreezeAccountBiscuitsController extends AbstractShowController
     protected function data(ServerRequestInterface $request, $document)
     {
         $actor = RequestUtil::getActor($request);
-        $accountUserId = session('account_id');
+        $accountUserId = $request->getAttribute('session')->get('account_id');
 
         if (! $accountUserId) {
             throw new \Flarum\User\Exception\PermissionDeniedException();
