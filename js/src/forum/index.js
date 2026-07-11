@@ -79,7 +79,7 @@ app.initializers.add('teacherli07-anonymous', function (app) {
         return items;
     });
 
-    // Replace PostUser userViewItems to link to biscuit profile instead of user profile
+    // Replace PostUser userViewItems to link to biscuit profile + remove user card
     override(PostUser.prototype, 'userViewItems', function (original, user, post) {
         const items = original(user, post);
         const biscuitString = user && user.displayName ? user.displayName() : null;
@@ -96,6 +96,9 @@ app.initializers.add('teacherli07-anonymous', function (app) {
                 ), 100);
             }
         }
+
+        // Remove user card popup - it leaks real user info (login time, join date, etc.)
+        items.remove('postUser-card');
 
         return items;
     });
