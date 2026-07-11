@@ -11,6 +11,9 @@ export default class BiscuitProfilePage extends Page {
             filter: { biscuit: this.biscuitString },
             sort: '-lastPostedAt',
         });
+
+        // Clear any preloaded data and force a fresh API call
+        this.discussionListState.refresh();
     }
 
     view() {
