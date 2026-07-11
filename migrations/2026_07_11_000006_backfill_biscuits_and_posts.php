@@ -35,8 +35,8 @@ return [
                 'biscuit_string' => $string,
                 'is_default' => true,
                 'is_frozen' => false,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
             ]);
         }
 
