@@ -5,33 +5,20 @@ import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 export default class BiscuitList extends Component {
     oninit(vnode) {
         super.oninit(vnode);
-        this.biscuits = [];
-        this.loading = true;
-        this.slots = app.session.user ? app.session.user.biscuitSlots() : 1;
-        this.load();
-    }
-
-    load() {
-        this.loading = true;
-        app.store.find('biscuits').then(biscuits => {
-            this.biscuits = biscuits;
-            this.loading = false;
-            m.redraw();
-        });
     }
 
     view() {
-        const { onSelectForFreeze, selectedIds } = this.attrs;
+        const { onSelectForFreeze, selectedIds, biscuits } = this.attrs;
 
-        if (this.loading) {
+        if (!biscuits && this.attrs.loading) {
             return <LoadingIndicator />;
         }
 
         return (
             <div className="BiscuitList">
-                {this.biscuits.map(biscuit => {
+                {(biscuits || []).map(biscuit => {
                     const isActive = !biscuit.isDeleted() && !biscuit.isFrozen();
-                    const isDeleted = !!biscuit.isDeleted();
+                    const isDeleted = biscuit.isDeleted();
                     const isSelected = selectedIds && selectedIds.indexOf(biscuit.id()) !== -1;
 
                     return (
@@ -67,7 +54,7 @@ export default class BiscuitList extends Component {
                                     </span>
                                 ) : null}
                             </div>
-                            {!onSelectForFreeze ? (
+                            {!onSelectForFreeze && this.attrs.renderActions ? (
                                 <div className="BiscuitListItem-actions">
                                     {this.attrs.renderActions(biscuit)}
                                 </div>
