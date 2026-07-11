@@ -15,6 +15,7 @@ import Button from 'flarum/common/components/Button';
 import Model from 'flarum/common/Model';
 import Post from 'flarum/common/models/Post';
 import Discussion from 'flarum/common/models/Discussion';
+import User from 'flarum/common/models/User';
 
 import Biscuit from './models/Biscuit';
 import BiscuitManagerPage from './components/BiscuitManagerPage';
@@ -32,6 +33,9 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     Post.prototype.biscuitIsFrozen = Model.attribute('biscuitIsFrozen');
 
     Discussion.prototype.biscuitString = Model.attribute('biscuitString');
+
+    User.prototype.displayName = Model.attribute('displayName');
+    User.prototype.biscuitSlots = Model.attribute('biscuitSlots');
 
     app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
     app.routes.biscuitProfile = { path: '/b/:biscuitString', component: BiscuitProfilePage };
