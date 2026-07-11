@@ -37,5 +37,8 @@ class RegisterWithPhone
             $user->username = str_replace('-', '', (string) Str::uuid());
             $user->username = substr($user->username, 0, 30);
         }
+
+        // Skip email confirmation (SMTP not configured)
+        $user->activate();
     }
 }
