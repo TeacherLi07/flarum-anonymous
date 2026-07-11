@@ -3,6 +3,7 @@ import Button from 'flarum/common/components/Button';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import FieldSet from 'flarum/common/components/FieldSet';
 import DiscussionList from 'flarum/forum/components/DiscussionList';
+import DiscussionListState from 'flarum/forum/states/DiscussionListState';
 import BiscuitList from './BiscuitList';
 import BiscuitListItemActions from './BiscuitListItem';
 
@@ -13,6 +14,12 @@ export default class BiscuitManagerPage extends Page {
         this.loading = true;
         this.slots = app.session.user ? app.session.user.biscuitSlots() : 1;
         this.showClaimButton = false;
+
+        this.discussionListState = new DiscussionListState({
+            filter: { author: app.session.user.id() },
+            sort: '-lastPostedAt',
+        });
+
         this.refresh();
     }
 
@@ -20,7 +27,7 @@ export default class BiscuitManagerPage extends Page {
         this.loading = true;
         Promise.all([
             app.store.find('biscuits'),
-            app.store.find('discussions', { sort: '-lastPostedAt', filter: { author: app.session.user.id() } }),
+            this.discussionListState.refresh(),
         ]).then(([biscuits]) => {
             this.biscuits = biscuits;
             const activeCount = biscuits.filter(b => !b.isDeleted() && !b.isFrozen()).length;
@@ -67,12 +74,7 @@ export default class BiscuitManagerPage extends Page {
                     </FieldSet>
 
                     <FieldSet label={app.translator.trans('teacherli07-anonymous.forum.manager.all_posts')}>
-                        <DiscussionList
-                            params={{
-                                filter: { author: app.session.user.id() },
-                                sort: '-lastPostedAt',
-                            }}
-                        />
+                        <DiscussionList state={this.discussionListState} />
                     </FieldSet>
                 </div>
             </div>
