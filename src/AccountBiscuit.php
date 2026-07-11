@@ -12,6 +12,8 @@ class AccountBiscuit extends AbstractModel
 
     protected $table = 'account_biscuits';
 
+    public $timestamps = true;
+
     protected $dates = ['deleted_at'];
 
     protected $guarded = [];
