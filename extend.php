@@ -53,6 +53,11 @@ return [
                 }
                 // Admin: no redirect, allow access for auditing
             }
+
+            // Require login for /biscuits
+            if ($path === '/biscuits' && $actor->isGuest()) {
+                $document->head[] = '<meta http-equiv="refresh" content="0;url=/">';
+            }
         }),
 
     (new Extend\Frontend('admin'))
