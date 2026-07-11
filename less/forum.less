@@ -19,6 +19,66 @@
     }
 }
 
+.BiscuitPostAvatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.BiscuitPostName {
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.BiscuitUsername {
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.BiscuitAvatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &--deleted {
+        opacity: 0.5;
+        filter: grayscale(100%);
+    }
+
+    &--frozen {
+        opacity: 0.7;
+    }
+}
+
+.BiscuitAvatarLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .BiscuitManagerPage {
     padding: 20px 0;
 

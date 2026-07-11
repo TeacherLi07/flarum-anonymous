@@ -40,26 +40,44 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
     app.routes.biscuitProfile = { path: '/b/:biscuitString', component: BiscuitProfilePage };
 
-    // Replace username helper globally
+    // Replace username helper - show biscuit string instead
     override(username, function (original, user) {
-        if (user && user.displayName) {
-            const delegate = user.displayName();
-            return delegate ? BiscuitLabel.component({ biscuitString: delegate }) : original(user);
+        if (user && user.displayName && user.displayName()) {
+            const biscuitString = user.displayName();
+            return (
+                <Link href={app.route('biscuitProfile', { biscuitString })} className="BiscuitUsername">
+                    {biscuitString}
+                </Link>
+            );
         }
         return original(user);
     });
 
-    // Replace PostUser display
-    extend(PostUser.prototype, 'view', function (vdom) {
-        const post = this.attrs.post;
-        const biscuitString = post && post.biscuitString ? post.biscuitString() : null;
+    // Replace PostUser linkChildren to show biscuit avatar + biscuit name
+    override(PostUser.prototype, 'linkChildren', function (original, user) {
+        const items = original(user);
+        const biscuitString = user && user.displayName ? user.displayName() : null;
+
         if (biscuitString) {
-            vdom.children = BiscuitLabel.component({
-                biscuitString: biscuitString,
-                isDeleted: post.biscuitIsDeleted ? post.biscuitIsDeleted() : false,
-                isFrozen: post.biscuitIsFrozen ? post.biscuitIsFrozen() : false,
-            });
+            const firstChar = biscuitString.charAt(0).toUpperCase();
+            const hash = biscuitString.split('').reduce((h, c) => c.charCodeAt(0) + ((h << 5) - h), 0);
+            const hue = Math.abs(hash) % 360;
+            const bgColor = 'hsl(' + hue + ', 45%, 55%)';
+
+            items.remove('avatar');
+            items.add('avatar', (
+                <span className={'BiscuitPostAvatar'} style={'background-color: ' + bgColor + '; color: #fff;'}>
+                    {firstChar}
+                </span>
+            ), 100);
+
+            items.remove('username');
+            items.add('username', (
+                <span className="BiscuitPostName">{biscuitString}</span>
+            ), 80);
         }
+
+        return items;
     });
 
     // Replace DiscussionListItem author display
