@@ -98,8 +98,23 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     });
 
     // Replace SignUpModal with phone registration
-    override(SignUpModal.prototype, 'fields', function (original) {
-        return PhoneRegisterForm.fields();
+    extend(SignUpModal.prototype, 'fields', function (items) {
+        // Replace the username field with phone fields
+        items.remove('username');
+        items.add('phone',
+            <div className="Form-group">
+                <input className="FormControl" name="phone" type="tel"
+                    placeholder={app.translator.trans('teacherli07-anonymous.forum.phone.label')} />
+            </div>,
+            10
+        );
+        items.add('verificationCode',
+            <div className="Form-group">
+                <input className="FormControl" name="verificationCode" type="text"
+                    placeholder={app.translator.trans('teacherli07-anonymous.forum.phone.verify_code')} />
+            </div>,
+            15
+        );
     });
 
     // Replace login modal to accept phone
