@@ -1,12 +1,16 @@
 import Page from 'flarum/common/components/Page';
-import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import DiscussionList from 'flarum/forum/components/DiscussionList';
+import DiscussionListState from 'flarum/forum/states/DiscussionListState';
 
 export default class BiscuitProfilePage extends Page {
     oninit(vnode) {
         super.oninit(vnode);
         this.biscuitString = m.route.param('biscuitString');
-        this.loading = true;
+
+        this.discussionListState = new DiscussionListState({
+            filter: { biscuit: this.biscuitString },
+            sort: '-lastPostedAt',
+        });
     }
 
     view() {
@@ -16,12 +20,7 @@ export default class BiscuitProfilePage extends Page {
                     <div className="BiscuitProfilePage-header">
                         <h2>{this.biscuitString}</h2>
                     </div>
-                    <DiscussionList
-                        params={{
-                            filter: { biscuit: this.biscuitString },
-                            sort: '-lastPostedAt',
-                        }}
-                    />
+                    <DiscussionList state={this.discussionListState} />
                 </div>
             </div>
         );
