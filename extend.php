@@ -40,9 +40,17 @@ return [
 
             // Block /u/* pages: redirect based on role
             if (preg_match('#^/u/([^/]+)#', $path, $m)) {
-                if ($actor->isGuest() || !$actor->isAdmin()) {
-                    $document->head[] = '<meta http-equiv="refresh" content="0;url=' . $actor->getUrlGenerator()->to('forum')->route('index') . '">';
+                $baseUrl = resolve(\Flarum\Settings\SettingsRepositoryInterface::class)->get('forum_title') ? 
+                           resolve(\Flarum\Http\UrlGenerator::class)->to('forum')->route('index') : 
+                           '/';
+                if (!$actor->isGuest() && !$actor->isAdmin()) {
+                    // Non-admin logged-in user: redirect to home
+                    $document->head[] = '<meta http-equiv="refresh" content="0;url=' . $baseUrl . '">';
+                } elseif ($actor->isGuest()) {
+                    // Guest: redirect to home
+                    $document->head[] = '<meta http-equiv="refresh" content="0;url=' . $baseUrl . '">';
                 }
+                // Admin: no redirect, allow access for auditing
             }
         }),
 

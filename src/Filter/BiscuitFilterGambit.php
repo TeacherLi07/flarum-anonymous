@@ -44,7 +44,6 @@ class BiscuitFilterGambit extends AbstractRegexGambit implements FilterInterface
         $query->whereIn('discussions.id', function (Builder $query) use ($value) {
             $query->select('discussion_id')
                 ->from('posts')
-                ->where('posts.number', 1)
                 ->where('posts.biscuit_string', $value);
         }, 'and', !$negate);
     }
