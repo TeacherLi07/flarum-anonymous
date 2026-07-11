@@ -100,20 +100,45 @@ app.initializers.add('teacherli07-anonymous', function (app) {
         return items;
     });
 
-    // Replace DiscussionListItem author display
-    extend(DiscussionListItem.prototype, 'view', function (vdom) {
+    // Replace DiscussionListItem author link to point to biscuit profile
+    override(DiscussionListItem.prototype, 'view', function (original) {
+        const vdom = original();
+
+        // Find user links and replace with biscuit profile links
+        // The DiscussionListItem renders author as a link with href=/u/:username
+        // We need to change this to /b/:biscuitString
         const discussion = this.attrs.discussion;
         const biscuitString = discussion && discussion.biscuitString ? discussion.biscuitString() : null;
+
         if (biscuitString) {
-            // Replace the author section with biscuit label
-            const startPost = discussion.firstPost();
-            if (startPost) {
-                const postBiscuit = startPost.biscuitString ? startPost.biscuitString() : biscuitString;
-                // The username helper is already overridden above
-                // This ensures discussions show biscuit strings properly
+            // Walk the vdom tree and replace /u/* links with /b/* links
+            this.replaceUserLinks(vdom, biscuitString);
+        }
+
+        return vdom;
+    });
+
+    // Helper: recursively replace /u/* links in vdom tree
+    DiscussionListItem.prototype.replaceUserLinks = function (vnode, biscuitString) {
+        if (!vnode || typeof vnode === 'string' || typeof vnode === 'number') return;
+
+        if (Array.isArray(vnode)) {
+            vnode.forEach(child => this.replaceUserLinks(child, biscuitString));
+            return;
+        }
+
+        if (vnode.children) {
+            if (Array.isArray(vnode.children)) {
+                vnode.children.forEach(child => this.replaceUserLinks(child, biscuitString));
+            } else {
+                this.replaceUserLinks(vnode.children, biscuitString);
             }
         }
-    });
+
+        if (vnode.attrs && vnode.attrs.href && typeof vnode.attrs.href === 'string' && vnode.attrs.href.startsWith('/u/')) {
+            vnode.attrs.href = app.route('biscuitProfile', { biscuitString });
+        }
+    };
 
     // Add biscuit manager link to user dropdown
     extend(IndexPage.prototype, 'sidebarItems', function (items) {

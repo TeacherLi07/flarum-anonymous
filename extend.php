@@ -13,11 +13,13 @@ use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Api\Serializer\PostSerializer;
 use Flarum\Api\Serializer\UserSerializer;
+use Flarum\Discussion\Filter\DiscussionFilterer;
 use Flarum\Extend;
 use Flarum\Post\Event\Saving as PostSaving;
 use Flarum\User\Event\Registered;
 use Flarum\User\Event\Saving as UserSaving;
 use Flarum\User\User;
+use TeacherLi07\Anonymous\Filter\BiscuitFilterGambit;
 use TeacherLi07\Anonymous\Access\BiscuitPolicy;
 use TeacherLi07\Anonymous\Api\Controller;
 use TeacherLi07\Anonymous\Api\Serializer\BiscuitSerializer;
@@ -31,7 +33,18 @@ return [
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/less/forum.less')
         ->route('/biscuits', 'teacherli07-anonymous.biscuits')
-        ->route('/b/{biscuitString}', 'teacherli07-anonymous.biscuitProfile'),
+        ->route('/b/{biscuitString}', 'teacherli07-anonymous.biscuitProfile')
+        ->content(function (\Flarum\Frontend\Document $document, \Psr\Http\Message\ServerRequestInterface $request) {
+            $path = $request->getUri()->getPath();
+            $actor = \Flarum\Http\RequestUtil::getActor($request);
+
+            // Block /u/* pages: redirect based on role
+            if (preg_match('#^/u/([^/]+)#', $path, $m)) {
+                if ($actor->isGuest() || !$actor->isAdmin()) {
+                    $document->head[] = '<meta http-equiv="refresh" content="0;url=' . $actor->getUrlGenerator()->to('forum')->route('index') . '">';
+                }
+            }
+        }),
 
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
@@ -132,6 +145,9 @@ return [
 
     (new Extend\Middleware('api'))
         ->add(InjectBiscuitToPostData::class),
+
+    (new Extend\Filter(DiscussionFilterer::class))
+        ->addFilter(BiscuitFilterGambit::class),
 
     (new Extend\Policy())
         ->modelPolicy(Biscuit::class, BiscuitPolicy::class),
