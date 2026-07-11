@@ -44,8 +44,9 @@ class BiscuitManagerPage extends Component {
   }
 
   view() {
-    const used = this.biscuits.filter(b => !b.isFrozen()).length;
     const total = parseInt(app.forum.attribute('anonymousSlotMax')) || 5;
+    const used = this.biscuits.filter(b => b instanceof AccountBiscuit && !b.isFrozen()).length;
+    const canClaim = this.biscuits.length > 0;
 
     return m('div', { className: 'BiscuitManager' }, [
       m('div', { className: 'BiscuitManager-header' }, [
@@ -57,7 +58,6 @@ class BiscuitManagerPage extends Component {
           className: 'Button Button--primary',
           onclick: () => this.claimBiscuit(),
           loading: this.claiming,
-          disabled: used >= total,
         }, app.translator.trans('teacherli07-anonymous.forum.manager.claim_new'))
       ),
       this.loading
