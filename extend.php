@@ -15,7 +15,7 @@ use Flarum\Api\Serializer\UserSerializer;
 use Flarum\Extend;
 use Flarum\Post\Event\Saving as PostSaving;
 use Flarum\User\Event\Registered;
-use Flarum\User\Event\Registering;
+use Flarum\User\Event\Saving as UserSaving;
 use Flarum\User\User;
 use TeacherLi07\Anonymous\Access\BiscuitPolicy;
 use TeacherLi07\Anonymous\Api\Controller;
@@ -127,7 +127,7 @@ return [
         ->modelPolicy(Biscuit::class, BiscuitPolicy::class),
 
     (new Extend\Event())
-        ->listen(Registering::class, Listener\RegisterWithPhone::class)
+        ->listen(UserSaving::class, Listener\RegisterWithPhone::class)
         ->listen(Registered::class, Listener\CreateInitialBiscuit::class)
         ->listen(PostSaving::class, Listener\AddBiscuitToPost::class),
 
