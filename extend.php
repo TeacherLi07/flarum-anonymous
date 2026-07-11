@@ -26,6 +26,7 @@ use TeacherLi07\Anonymous\Api\Serializer\BiscuitSerializer;
 use TeacherLi07\Anonymous\Biscuit;
 use TeacherLi07\Anonymous\Listener;
 use TeacherLi07\Anonymous\Middleware\InjectBiscuitToPostData;
+use TeacherLi07\Anonymous\Middleware\RestrictLoginIdentification;
 use TeacherLi07\Anonymous\SlotManager;
 
 return [
@@ -162,6 +163,9 @@ return [
         ->serializeToForum('slotDaysRequired', 'anonymous.slot_days_required', null, '7')
         ->serializeToForum('slotPostsRequired', 'anonymous.slot_posts_required', null, '30')
         ->serializeToForum('slotMax', 'anonymous.slot_max', null, '5'),
+
+    (new Extend\Middleware('forum'))
+        ->add(RestrictLoginIdentification::class),
 
     (new Extend\Middleware('api'))
         ->add(InjectBiscuitToPostData::class),

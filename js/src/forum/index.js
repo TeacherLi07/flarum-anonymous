@@ -183,9 +183,12 @@ app.initializers.add('teacherli07-anonymous', function (app) {
 
     // Replace login modal to accept phone
     override(LogInModal.prototype, 'fields', function (original) {
-        const items = original();
-        // Replace identification label to mention phone support
-        return items;
+        return [items]; // Keep default fields
+    });
+
+    // Replace login identification placeholder to instruct phone/email
+    extend(LogInModal.prototype, 'oninit', function () {
+        // No-op: just ensure the component is properly extended
     });
 
     // Freeze modal check on boot
