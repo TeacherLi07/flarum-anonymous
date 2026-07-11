@@ -1,10 +1,7 @@
 import Component from 'flarum/common/Component';
 import Button from 'flarum/common/components/Button';
-import Link from 'flarum/common/components/Link';
 import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
-import IndexPage from 'flarum/forum/components/IndexPage';
-import DiscussionComposer from 'flarum/forum/components/DiscussionComposer';
 import SessionDropdown from 'flarum/forum/components/SessionDropdown';
 import LogInModal from 'flarum/forum/components/LogInModal';
 import SignUpModal from 'flarum/forum/components/SignUpModal';
@@ -221,7 +218,7 @@ app.initializers.add('teacherli07-anonymous', function () {
   app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
 
   // 4. Session dropdown link
-  if (app.forum.attribute('canManageBiscuits')) {
+  if (SessionDropdown && app.forum.attribute('canManageBiscuits')) {
     extend(SessionDropdown.prototype, 'items', function (items) {
       items.add('biscuits',
         Button.component({
