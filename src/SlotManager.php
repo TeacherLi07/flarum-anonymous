@@ -27,7 +27,7 @@ class SlotManager
         $daysRequired = (int) $this->settings->get('anonymous.slot_days_required', 7);
         $postsRequired = (int) $this->settings->get('anonymous.slot_posts_required', 30);
 
-        $days = max(0, $user->created_at->diffInDays(now()));
+        $days = $user->created_at ? max(0, $user->created_at->diffInDays(now())) : 0;
         $posts = max(0, (int) ($user->comment_count ?? 0) + (int) ($user->discussion_count ?? 0));
 
         $slotsByDays = $daysRequired > 0 ? intdiv($days, $daysRequired) : 9999;
@@ -40,6 +40,10 @@ class SlotManager
 
     public function needsFreeze(User $user): bool
     {
+        if (!$user->id) {
+            return false;
+        }
+
         $allowed = $this->calculateAvailableSlots($user);
         $usable = Biscuit::where('user_id', $user->id)->usable()->count();
 

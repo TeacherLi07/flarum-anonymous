@@ -20,8 +20,9 @@ class InjectBiscuitToPostData implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $path = $request->getUri()->getPath();
+        $method = strtoupper($request->getMethod());
 
-        if ($this->isPostEndpoint($path)) {
+        if ($method === 'POST' && $this->isPostEndpoint($path)) {
             $body = $request->getParsedBody();
 
             if (is_array($body)) {
