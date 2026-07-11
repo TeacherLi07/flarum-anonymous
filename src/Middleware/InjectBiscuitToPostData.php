@@ -7,7 +7,7 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Middleware;
+namespace TeacherLi07\Anonymous\Middleware;
 
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;

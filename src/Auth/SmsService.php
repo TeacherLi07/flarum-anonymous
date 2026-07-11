@@ -7,7 +7,7 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Auth;
+namespace TeacherLi07\Anonymous\Auth;
 
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Cache\Repository as Cache;

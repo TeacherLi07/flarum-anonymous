@@ -40,21 +40,21 @@ export default class BiscuitManagerPage extends Page {
         return (
             <div className="BiscuitManagerPage">
                 <div className="container">
-                    <h2>{app.translator.trans('huihu-anonymous.forum.manager.title')}</h2>
+                    <h2>{app.translator.trans('teacherli07-anonymous.forum.manager.title')}</h2>
 
                     <div className="BiscuitManagerPage-slots">
-                        <span>{app.translator.trans('huihu-anonymous.forum.manager.slots_used', {
+                        <span>{app.translator.trans('teacherli07-anonymous.forum.manager.slots_used', {
                             used: activeCount,
                             total: this.slots,
                         })}</span>
                         {this.showClaimButton ? (
                             <Button className="Button Button--primary" icon="fas fa-plus" loading={this.claiming} onclick={this.claimBiscuit.bind(this)}>
-                                {app.translator.trans('huihu-anonymous.forum.manager.claim_new')}
+                                {app.translator.trans('teacherli07-anonymous.forum.manager.claim_new')}
                             </Button>
                         ) : null}
                     </div>
 
-                    <FieldSet label={app.translator.trans('huihu-anonymous.forum.manager.your_biscuits')}>
+                    <FieldSet label={app.translator.trans('teacherli07-anonymous.forum.manager.your_biscuits')}>
                         <BiscuitList
                             biscuits={this.biscuits}
                             renderActions={biscuit => BiscuitListItemActions(biscuit, {
@@ -66,7 +66,7 @@ export default class BiscuitManagerPage extends Page {
                         />
                     </FieldSet>
 
-                    <FieldSet label={app.translator.trans('huihu-anonymous.forum.manager.all_posts')}>
+                    <FieldSet label={app.translator.trans('teacherli07-anonymous.forum.manager.all_posts')}>
                         <DiscussionList
                             params={{
                                 filter: { author: app.session.user.id() },
@@ -95,14 +95,14 @@ export default class BiscuitManagerPage extends Page {
     }
 
     editNote(biscuit) {
-        const note = prompt(app.translator.trans('huihu-anonymous.forum.manager.note_placeholder'), biscuit.note() || '');
+        const note = prompt(app.translator.trans('teacherli07-anonymous.forum.manager.note_placeholder'), biscuit.note() || '');
         if (note !== null) {
             biscuit.save({ note }).then(() => this.refresh());
         }
     }
 
     deleteBiscuit(biscuit) {
-        if (confirm(app.translator.trans('huihu-anonymous.forum.manager.confirm_delete'))) {
+        if (confirm(app.translator.trans('teacherli07-anonymous.forum.manager.confirm_delete'))) {
             biscuit.delete().then(() => this.refresh());
         }
     }

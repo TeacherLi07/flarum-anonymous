@@ -16,7 +16,7 @@ export default class FreezeBiscuitModal extends Modal {
     }
 
     title() {
-        return app.translator.trans('huihu-anonymous.forum.freeze_modal.title');
+        return app.translator.trans('teacherli07-anonymous.forum.freeze_modal.title');
     }
 
     loadBiscuits() {
@@ -34,7 +34,7 @@ export default class FreezeBiscuitModal extends Modal {
 
         return (
             <div className="Modal-body">
-                <p>{app.translator.trans('huihu-anonymous.forum.freeze_modal.description', {
+                <p>{app.translator.trans('teacherli07-anonymous.forum.freeze_modal.description', {
                     old: this.biscuits.length,
                     new: this.biscuits.length - this.requiredCount,
                     count: this.requiredCount,
@@ -56,17 +56,17 @@ export default class FreezeBiscuitModal extends Modal {
                 <div className="FreezeBiscuitModal-footer">
                     {selectedCount < this.requiredCount ? (
                         <span className="FreezeBiscuitModal-hint">
-                            {app.translator.trans('huihu-anonymous.forum.freeze_modal.still_need', {
+                            {app.translator.trans('teacherli07-anonymous.forum.freeze_modal.still_need', {
                                 count: this.requiredCount - selectedCount,
                             })}
                         </span>
                     ) : (
                         <span className="FreezeBiscuitModal-hint FreezeBiscuitModal-hint--ready">
-                            {app.translator.trans('huihu-anonymous.forum.freeze_modal.ready')}
+                            {app.translator.trans('teacherli07-anonymous.forum.freeze_modal.ready')}
                         </span>
                     )}
                     <Button className="Button Button--primary" disabled={!canSubmit} onclick={this.submit.bind(this)}>
-                        {app.translator.trans('huihu-anonymous.forum.freeze_modal.submit')}
+                        {app.translator.trans('teacherli07-anonymous.forum.freeze_modal.submit')}
                     </Button>
                 </div>
             </div>

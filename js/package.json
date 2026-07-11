@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@huihu/flarum-anonymous",
+    "name": "@teacherli07/flarum-anonymous",
     "dependencies": {
         "flarum-webpack-config": "^1.0.0",
         "webpack": "^4.0.0",

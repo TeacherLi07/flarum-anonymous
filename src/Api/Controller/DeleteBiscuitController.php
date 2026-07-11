@@ -7,12 +7,12 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Api\Controller;
+namespace TeacherLi07\Anonymous\Api\Controller;
 
 use Flarum\Api\Controller\AbstractDeleteController;
 use Flarum\Http\RequestUtil;
-use Huihu\Anonymous\Biscuit;
-use Huihu\Anonymous\BiscuitGenerator;
+use TeacherLi07\Anonymous\Biscuit;
+use TeacherLi07\Anonymous\BiscuitGenerator;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -7,9 +7,9 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Api\Controller;
+namespace TeacherLi07\Anonymous\Api\Controller;
 
-use Huihu\Anonymous\Auth\SmsService;
+use TeacherLi07\Anonymous\Auth\SmsService;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -7,20 +7,20 @@ export default class PhoneRegisterForm extends Component {
         return [
             <div className="Form-group">
                 <input className="FormControl" name="phone" type="tel"
-                    placeholder={app.translator.trans('huihu-anonymous.forum.phone.label')}
+                    placeholder={app.translator.trans('teacherli07-anonymous.forum.phone.label')}
                     bidi={this.phone} />
             </div>,
             <div className="Form-group">
                 <div className="PhoneVerifyRow">
                     <input className="FormControl" name="verificationCode" type="text"
-                        placeholder={app.translator.trans('huihu-anonymous.forum.phone.verify_code')}
+                        placeholder={app.translator.trans('teacherli07-anonymous.forum.phone.verify_code')}
                         bidi={this.code} />
                     <Button className="Button Button--primary PhoneVerifyRow-send"
                         loading={this.sending} disabled={this.countdown > 0}
                         onclick={this.sendCode.bind(this)}>
                         {this.countdown > 0
-                            ? app.translator.trans('huihu-anonymous.forum.phone.resend', { seconds: this.countdown })
-                            : app.translator.trans('huihu-anonymous.forum.phone.send_code')}
+                            ? app.translator.trans('teacherli07-anonymous.forum.phone.resend', { seconds: this.countdown })
+                            : app.translator.trans('teacherli07-anonymous.forum.phone.send_code')}
                     </Button>
                 </div>
             </div>,

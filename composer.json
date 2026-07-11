@@ -1,5 +1,5 @@
 {
-    "name": "huihu/flarum-anonymous",
+    "name": "teacherli07/flarum-anonymous",
     "description": "Turn Flarum into an anonymous community with biscuit identities.",
     "type": "flarum-extension",
     "keywords": [
@@ -12,12 +12,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Huihu\\Anonymous\\": "src/"
+            "TeacherLi07\\Anonymous\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Huihu\\Anonymous\\Tests\\": "tests/"
+            "TeacherLi07\\Anonymous\\Tests\\": "tests/"
         }
     },
     "extra": {

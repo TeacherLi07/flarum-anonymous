@@ -7,10 +7,10 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Api\Serializer;
+namespace TeacherLi07\Anonymous\Api\Serializer;
 
 use Flarum\Api\Serializer\AbstractSerializer;
-use Huihu\Anonymous\Biscuit;
+use TeacherLi07\Anonymous\Biscuit;
 
 class BiscuitSerializer extends AbstractSerializer
 {

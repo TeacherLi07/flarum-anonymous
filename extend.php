@@ -17,13 +17,13 @@ use Flarum\Post\Event\Saving as PostSaving;
 use Flarum\User\Event\Registered;
 use Flarum\User\Event\Registering;
 use Flarum\User\User;
-use Huihu\Anonymous\Access\BiscuitPolicy;
-use Huihu\Anonymous\Api\Controller;
-use Huihu\Anonymous\Api\Serializer\BiscuitSerializer;
-use Huihu\Anonymous\Biscuit;
-use Huihu\Anonymous\Listener;
-use Huihu\Anonymous\Middleware\InjectBiscuitToPostData;
-use Huihu\Anonymous\SlotManager;
+use TeacherLi07\Anonymous\Access\BiscuitPolicy;
+use TeacherLi07\Anonymous\Api\Controller;
+use TeacherLi07\Anonymous\Api\Serializer\BiscuitSerializer;
+use TeacherLi07\Anonymous\Biscuit;
+use TeacherLi07\Anonymous\Listener;
+use TeacherLi07\Anonymous\Middleware\InjectBiscuitToPostData;
+use TeacherLi07\Anonymous\SlotManager;
 
 return [
     (new Extend\Frontend('forum'))

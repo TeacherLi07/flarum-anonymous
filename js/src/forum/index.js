@@ -24,7 +24,7 @@ import BiscuitSelector from './components/BiscuitSelector';
 import FreezeBiscuitModal from './components/FreezeBiscuitModal';
 import PhoneRegisterForm from './components/PhoneRegisterForm';
 
-app.initializers.add('huihu-anonymous', function (app) {
+app.initializers.add('teacherli07-anonymous', function (app) {
     app.store.models.biscuits = Biscuit;
 
     Post.prototype.biscuitString = Model.attribute('biscuitString');
@@ -80,7 +80,7 @@ app.initializers.add('huihu-anonymous', function (app) {
                 Link.component({
                     href: app.route('biscuits'),
                     icon: 'fas fa-user-secret',
-                }, app.translator.trans('huihu-anonymous.forum.manager.title')),
+                }, app.translator.trans('teacherli07-anonymous.forum.manager.title')),
                 -10
             );
         }

@@ -53,17 +53,17 @@ export default class BiscuitList extends Component {
                                 </span>
                                 {biscuit.isDefault() ? (
                                     <span className="BiscuitListItem-badge">
-                                        {app.translator.trans('huihu-anonymous.forum.biscuit_label.default')}
+                                        {app.translator.trans('teacherli07-anonymous.forum.biscuit_label.default')}
                                     </span>
                                 ) : null}
                                 {biscuit.isFrozen() ? (
                                     <span className="BiscuitListItem-badge BiscuitListItem-badge--frozen">
-                                        {app.translator.trans('huihu-anonymous.forum.biscuit_label.frozen')}
+                                        {app.translator.trans('teacherli07-anonymous.forum.biscuit_label.frozen')}
                                     </span>
                                 ) : null}
                                 {isDeleted ? (
                                     <span className="BiscuitListItem-badge BiscuitListItem-badge--deleted">
-                                        {app.translator.trans('huihu-anonymous.forum.biscuit_label.deleted')}
+                                        {app.translator.trans('teacherli07-anonymous.forum.biscuit_label.deleted')}
                                     </span>
                                 ) : null}
                             </div>

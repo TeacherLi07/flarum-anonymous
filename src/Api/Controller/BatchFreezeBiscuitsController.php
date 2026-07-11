@@ -7,13 +7,13 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Api\Controller;
+namespace TeacherLi07\Anonymous\Api\Controller;
 
 use Flarum\Api\Controller\AbstractShowController;
 use Flarum\Http\RequestUtil;
-use Huihu\Anonymous\Api\Serializer\BiscuitSerializer;
-use Huihu\Anonymous\Biscuit;
-use Huihu\Anonymous\SlotManager;
+use TeacherLi07\Anonymous\Api\Serializer\BiscuitSerializer;
+use TeacherLi07\Anonymous\Biscuit;
+use TeacherLi07\Anonymous\SlotManager;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;
 use Tobscure\JsonApi\Document;

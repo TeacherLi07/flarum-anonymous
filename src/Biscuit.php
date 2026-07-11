@@ -7,7 +7,7 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous;
+namespace TeacherLi07\Anonymous;
 
 use Flarum\Database\AbstractModel;
 use Illuminate\Database\Eloquent\SoftDeletes;

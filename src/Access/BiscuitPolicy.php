@@ -7,11 +7,11 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Access;
+namespace TeacherLi07\Anonymous\Access;
 
 use Flarum\User\Access\AbstractPolicy;
 use Flarum\User\User;
-use Huihu\Anonymous\Biscuit;
+use TeacherLi07\Anonymous\Biscuit;
 
 class BiscuitPolicy extends AbstractPolicy
 {

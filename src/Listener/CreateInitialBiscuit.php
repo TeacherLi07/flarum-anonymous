@@ -7,11 +7,11 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Huihu\Anonymous\Listener;
+namespace TeacherLi07\Anonymous\Listener;
 
 use Flarum\User\Event\Registered;
-use Huihu\Anonymous\Biscuit;
-use Huihu\Anonymous\BiscuitGenerator;
+use TeacherLi07\Anonymous\Biscuit;
+use TeacherLi07\Anonymous\BiscuitGenerator;
 
 class CreateInitialBiscuit
 {
