@@ -15,7 +15,7 @@ class UpdateAccountBiscuitController extends AbstractShowController
 
     protected function data(ServerRequestInterface $request, $document)
     {
-        $id = $request->getAttribute('id');
+        $id = Arr::get($request->getQueryParams(), 'id');
         $actor = RequestUtil::getActor($request);
         $body = $request->getParsedBody();
         $attributes = Arr::get($body, 'data.attributes', []);

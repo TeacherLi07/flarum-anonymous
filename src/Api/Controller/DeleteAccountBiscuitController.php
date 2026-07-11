@@ -20,7 +20,7 @@ class DeleteAccountBiscuitController extends AbstractDeleteController
 
     protected function delete(ServerRequestInterface $request)
     {
-        $id = $request->getAttribute('id');
+        $id = Arr::get($request->getQueryParams(), 'id');
         $actor = RequestUtil::getActor($request);
 
         $biscuit = AccountBiscuit::findOrFail($id);

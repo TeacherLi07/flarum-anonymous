@@ -16,7 +16,7 @@ class ShowAccountBiscuitController extends AbstractShowController
 
     protected function data(ServerRequestInterface $request, $document)
     {
-        $id = $request->getAttribute('id');
+        $id = Arr::get($request->getQueryParams(), 'id');
         $actor = RequestUtil::getActor($request);
 
         $biscuit = AccountBiscuit::withTrashed()->findOrFail($id);
