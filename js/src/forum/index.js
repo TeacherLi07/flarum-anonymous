@@ -80,12 +80,11 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     });
 
     // Replace PostUser userViewItems to link to biscuit profile instead of user profile
-    override(PostUser.prototype, 'userViewItems', function (original, user) {
-        const items = original(user);
+    override(PostUser.prototype, 'userViewItems', function (original, user, post) {
+        const items = original(user, post);
         const biscuitString = user && user.displayName ? user.displayName() : null;
 
         if (biscuitString) {
-            // Change the link href in the postUser-name item
             const nameItem = items.get('postUser-name');
             if (nameItem) {
                 items.setContent('postUser-name', (
