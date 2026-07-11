@@ -39,8 +39,10 @@ return [
         ->get('/biscuits/{id}', 'biscuits.show', Controller\ShowBiscuitController::class)
         ->post('/biscuits', 'biscuits.create', Controller\CreateBiscuitController::class)
         ->patch('/biscuits/{id}', 'biscuits.update', Controller\UpdateBiscuitController::class)
-        ->delete('/biscuits/{id}', 'biscuits.delete', Controller\DeleteBiscuitController::class)
-        ->patch('/biscuits/freeze', 'biscuits.freeze', Controller\BatchFreezeBiscuitsController::class),
+        ->delete('/biscuits/{id}', 'biscuits.delete', Controller\DeleteBiscuitController::class),
+        
+    (new Extend\Routes('api'))
+        ->patch('/biscuits/batch/freeze', 'biscuits.freeze', Controller\BatchFreezeBiscuitsController::class),
 
     (new Extend\Routes('api'))
         ->post('/sms/send', 'sms.send', Controller\SendSmsCodeController::class),

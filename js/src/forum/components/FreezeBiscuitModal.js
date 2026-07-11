@@ -76,7 +76,7 @@ export default class FreezeBiscuitModal extends Modal {
     submit() {
         const ids = Object.keys(this.selectedIds).filter(k => this.selectedIds[k]).map(Number);
         app.request({
-            url: app.forum.attribute('apiUrl') + '/biscuits/freeze',
+            url: app.forum.attribute('apiUrl') + '/biscuits/batch/freeze',
             method: 'PATCH',
             body: { data: { ids, freezeCount: this.requiredCount } },
         }).then(() => {
