@@ -4,6 +4,8 @@ namespace TeacherLi07\Anonymous\Api\Controller;
 
 use Flarum\Api\Controller\AbstractShowController;
 use Flarum\Http\RequestUtil;
+use Flarum\User\User;
+use Illuminate\Support\Carbon;
 use Psr\Http\Message\ServerRequestInterface;
 use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\User\User;
@@ -43,7 +45,7 @@ class BindPhoneController extends AbstractShowController
         }
 
         $accountUser->phone = $phone;
-        $accountUser->phone_verified_at = now();
+        $accountUser->phone_verified_at = Carbon::now();
         $accountUser->save();
 
         return $actor;

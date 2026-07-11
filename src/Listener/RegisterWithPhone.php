@@ -4,6 +4,7 @@ namespace TeacherLi07\Anonymous\Listener;
 
 use Flarum\User\Event\Saving;
 use Flarum\User\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use TeacherLi07\Anonymous\AccountBiscuit;
 use TeacherLi07\Anonymous\Auth\SmsService;
@@ -40,7 +41,7 @@ class RegisterWithPhone
         }
 
         $event->user->phone = $phone;
-        $event->user->phone_verified_at = now();
+        $event->user->phone_verified_at = Carbon::now();
         $event->user->is_anonymous_account = true;
         $event->user->username = substr(sha1($phone), 0, 30);
         $event->user->email = $phone . '@anonymous.local';

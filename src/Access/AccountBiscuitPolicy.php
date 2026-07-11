@@ -4,6 +4,7 @@ namespace TeacherLi07\Anonymous\Access;
 
 use Flarum\User\Access\AbstractPolicy;
 use Flarum\User\User;
+use Illuminate\Support\Carbon;
 
 class AccountBiscuitPolicy extends AbstractPolicy
 {
@@ -13,7 +14,7 @@ class AccountBiscuitPolicy extends AbstractPolicy
             return $this->deny();
         }
 
-        if ($actor->suspended_until && $actor->suspended_until > now()) {
+        if ($actor->suspended_until && $actor->suspended_until > Carbon::now()) {
             return $this->deny();
         }
 

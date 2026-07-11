@@ -6,6 +6,7 @@ use Flarum\Api\Controller\AbstractCreateController;
 use Flarum\Http\RequestUtil;
 use Flarum\User\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Psr\Http\Message\ServerRequestInterface;
 use TeacherLi07\Anonymous\AccountBiscuit;
 use TeacherLi07\Anonymous\Api\Serializer\AccountBiscuitSerializer;
@@ -60,10 +61,10 @@ class RegisterWithPhoneController extends AbstractCreateController
         $accountUser->email = $phone . '@anonymous.local';
         $accountUser->password = $password;
         $accountUser->phone = $phone;
-        $accountUser->phone_verified_at = now();
+        $accountUser->phone_verified_at = Carbon::now();
         $accountUser->is_anonymous_account = true;
         $accountUser->is_email_confirmed = true;
-        $accountUser->joined_at = now();
+        $accountUser->joined_at = Carbon::now();
         $accountUser->save();
 
         session()->put('account_id', $accountUser->id);

@@ -4,6 +4,7 @@ namespace TeacherLi07\Anonymous;
 
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\User;
+use Illuminate\Support\Carbon;
 
 class SlotManager
 {
@@ -21,7 +22,7 @@ class SlotManager
         $slotMax = (int) ($this->settings->get('anonymous.slot_max') ?: 5);
 
         $daysSinceRegistration = $user->joined_at
-            ? max(0, now()->diffInDays($user->joined_at))
+            ? max(0, Carbon::now()->diffInDays($user->joined_at))
             : 0;
 
         $totalPosts = $user->comment_count + $user->discussion_count;
