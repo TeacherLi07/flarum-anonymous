@@ -102,7 +102,6 @@ return [
             return optional($discussion->firstPost)->biscuit_string;
         }),
 
-    /* Temporarily disabled for debugging
     (new Extend\ApiController(FlarumController\ShowDiscussionController::class))
         ->prepareDataForSerialization(function ($controller, $discussion, $request, $document) {
             $actor = \Flarum\Http\RequestUtil::getActor($request);
@@ -112,10 +111,9 @@ return [
                     ->whereNotNull('biscuit_string')
                     ->orderBy('created_at', 'desc')
                     ->first();
-                $document->setMeta('lastUsedBiscuitString', $lastPost ? $lastPost->biscuit_string : null);
+                $document->addMeta('lastUsedBiscuitString', $lastPost ? $lastPost->biscuit_string : null);
             }
         }),
-    */
 
     (new Extend\Settings())
         ->serializeToForum('slotDaysRequired', 'anonymous.slot_days_required', null, '7')
