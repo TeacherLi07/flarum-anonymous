@@ -168,6 +168,7 @@ return [
         ->add(RestrictLoginIdentification::class),
 
     (new Extend\Middleware('api'))
+        ->add(RestrictLoginIdentification::class)
         ->add(InjectBiscuitToPostData::class),
 
     (new Extend\Filter(DiscussionFilterer::class))
