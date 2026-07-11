@@ -1,22 +1,26 @@
 import Page from 'flarum/common/components/Page';
-import DiscussionList from 'flarum/forum/components/DiscussionList';
-import DiscussionListState from 'flarum/forum/states/DiscussionListState';
-import PaginatedListState from 'flarum/common/states/PaginatedListState';
+import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
+import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 
 export default class BiscuitProfilePage extends Page {
     oninit(vnode) {
         super.oninit(vnode);
         this.biscuitString = m.route.param('biscuitString');
+        this.discussions = [];
+        this.loading = true;
+        this.load();
+    }
 
-        this.discussionListState = new DiscussionListState({
+    load() {
+        app.store.find('discussions', {
             filter: { biscuit: this.biscuitString },
             sort: '-lastPostedAt',
+            include: 'user,lastPostedUser,firstPost,tags',
+        }).then(payload => {
+            this.discussions = payload;
+            this.loading = false;
+            m.redraw();
         });
-
-        // Bypass preloaded data by calling parent class loadPage directly
-        this.discussionListState.loadPage = PaginatedListState.prototype.loadPage;
-
-        this.discussionListState.refresh();
     }
 
     view() {
@@ -26,7 +30,15 @@ export default class BiscuitProfilePage extends Page {
                     <div className="BiscuitProfilePage-header">
                         <h2>{this.biscuitString}</h2>
                     </div>
-                    <DiscussionList state={this.discussionListState} />
+                    {this.loading ? <LoadingIndicator /> : this.discussions.length === 0 ? (
+                        <p>{app.translator.trans('core.forum.post_stream.empty_text') || 'Nothing here...'}</p>
+                    ) : (
+                        <div className="DiscussionList">
+                            {this.discussions.map(discussion => (
+                                <DiscussionListItem discussion={discussion} params={{}} />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         );
