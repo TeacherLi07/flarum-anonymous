@@ -87,6 +87,11 @@ return [
         ->attribute('canManageBiscuits', function (ForumSerializer $serializer) {
             $actor = $serializer->getActor();
             return $actor && !$actor->isGuest();
+        })
+        ->attribute('biscuitSlots', function (ForumSerializer $serializer) {
+            $actor = $serializer->getActor();
+            if (!$actor || $actor->isGuest()) return 1;
+            return (int) ($actor->biscuit_slots ?? 1);
         }),
 
     (new Extend\ApiSerializer(BasicUserSerializer::class))
@@ -105,9 +110,6 @@ return [
                 ->whereNull('deleted_at')
                 ->first();
             return $default ? $default->biscuit_string : null;
-        })
-        ->attribute('biscuitSlots', function (UserSerializer $serializer, $user) {
-            return (int) ($user->biscuit_slots ?? 1);
         }),
 
     (new Extend\ApiSerializer(PostSerializer::class))
@@ -134,6 +136,10 @@ return [
     (new Extend\ApiSerializer(DiscussionSerializer::class))
         ->attribute('biscuitString', function (DiscussionSerializer $serializer, $discussion) {
             return optional($discussion->firstPost)->biscuit_string;
+        })
+        ->attribute('lastPostedBiscuitString', function (DiscussionSerializer $serializer, $discussion) {
+            return optional($discussion->lastPostedPost)->biscuit_string
+                ?? optional($discussion->firstPost)->biscuit_string;
         }),
 
     (new Extend\ApiController(FlarumController\ShowDiscussionController::class))

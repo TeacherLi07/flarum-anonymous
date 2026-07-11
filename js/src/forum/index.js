@@ -33,9 +33,9 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     Post.prototype.biscuitIsFrozen = Model.attribute('biscuitIsFrozen');
 
     Discussion.prototype.biscuitString = Model.attribute('biscuitString');
+    Discussion.prototype.lastPostedBiscuitString = Model.attribute('lastPostedBiscuitString');
 
     User.prototype.displayName = Model.attribute('displayName');
-    User.prototype.biscuitSlots = Model.attribute('biscuitSlots');
 
     app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
     app.routes.biscuitProfile = { path: '/b/:biscuitString', component: BiscuitProfilePage };
@@ -105,40 +105,39 @@ app.initializers.add('teacherli07-anonymous', function (app) {
     // Replace DiscussionListItem author link to point to biscuit profile
     override(DiscussionListItem.prototype, 'view', function (original) {
         const vdom = original();
-
-        // Find user links and replace with biscuit profile links
-        // The DiscussionListItem renders author as a link with href=/u/:username
-        // We need to change this to /b/:biscuitString
         const discussion = this.attrs.discussion;
-        const biscuitString = discussion && discussion.biscuitString ? discussion.biscuitString() : null;
+        const opBiscuit = discussion && discussion.biscuitString ? discussion.biscuitString() : null;
+        const lastBiscuit = discussion && discussion.lastPostedBiscuitString ? discussion.lastPostedBiscuitString() : null;
 
-        if (biscuitString) {
-            // Walk the vdom tree and replace /u/* links with /b/* links
-            this.replaceUserLinks(vdom, biscuitString);
+        if (opBiscuit || lastBiscuit) {
+            this.replaceBiscuitLinks(vdom, opBiscuit, lastBiscuit);
         }
 
         return vdom;
     });
 
-    // Helper: recursively replace /u/* links in vdom tree
-    DiscussionListItem.prototype.replaceUserLinks = function (vnode, biscuitString) {
+    // Helper: replace /u/* links with biscuit-specific /b/* links in DiscussionListItem
+    DiscussionListItem.prototype.replaceBiscuitLinks = function (vnode, opBiscuit, lastBiscuit) {
         if (!vnode || typeof vnode === 'string' || typeof vnode === 'number') return;
 
         if (Array.isArray(vnode)) {
-            vnode.forEach(child => this.replaceUserLinks(child, biscuitString));
+            vnode.forEach(child => this.replaceBiscuitLinks(child, opBiscuit, lastBiscuit));
             return;
         }
 
         if (vnode.children) {
             if (Array.isArray(vnode.children)) {
-                vnode.children.forEach(child => this.replaceUserLinks(child, biscuitString));
+                vnode.children.forEach(child => this.replaceBiscuitLinks(child, opBiscuit, lastBiscuit));
             } else {
-                this.replaceUserLinks(vnode.children, biscuitString);
+                this.replaceBiscuitLinks(vnode.children, opBiscuit, lastBiscuit);
             }
         }
 
-        if (vnode.attrs && vnode.attrs.href && typeof vnode.attrs.href === 'string' && vnode.attrs.href.startsWith('/u/')) {
-            vnode.attrs.href = app.route('biscuitProfile', { biscuitString });
+        if (vnode.attrs && vnode.attrs.href && typeof vnode.attrs.href === 'string') {
+            const href = vnode.attrs.href;
+            if (href.startsWith('/u/') && lastBiscuit) {
+                vnode.attrs.href = app.route('biscuitProfile', { biscuitString: lastBiscuit });
+            }
         }
     };
 

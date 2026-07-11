@@ -12,7 +12,7 @@ export default class BiscuitManagerPage extends Page {
         super.oninit(vnode);
         this.biscuits = [];
         this.loading = true;
-        this.slots = app.session.user ? app.session.user.biscuitSlots() : 1;
+        this.slots = app.forum.attribute('biscuitSlots') || 1;
         this.showClaimButton = false;
 
         this.discussionListState = new DiscussionListState({

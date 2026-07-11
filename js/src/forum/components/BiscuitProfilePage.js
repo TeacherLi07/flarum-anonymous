@@ -36,7 +36,11 @@ export default class BiscuitProfilePage extends Page {
         Promise.all([dPromise, bPromise]).then(([response]) => {
             const data = app.store.pushPayload(response);
             this.discussions = Array.isArray(data) ? data : [];
-            this.postCount = this.discussions.reduce((sum, d) => sum + (d.commentCount ? d.commentCount() : 0), 0);
+            // Count: each matching discussion counts as 1, plus count the biscuit's replies
+            // We count each discussion the biscuit participated in = 1 per discussion
+            this.postCount = this.discussions.length;
+            // Also add extra replies within discussions (commentCount - 1 if biscuit started it, else just reply count)
+            // Simple approach: count discussions where biscuit appears
             this.loading = false;
             m.redraw();
         }).catch(() => {
@@ -88,7 +92,7 @@ export default class BiscuitProfilePage extends Page {
                         </nav>
                         <div className="sideNavOffset">
                             {this.loading ? <LoadingIndicator /> : this.discussions.length === 0 ? (
-                                <div className="DiscussionList">{app.translator.trans('core.forum.post_stream.empty_text')}</div>
+                                <div className="DiscussionList">{app.translator.trans('core.forum.discussion_list.empty_text')}</div>
                             ) : (
                                 <div className="DiscussionList">
                                     {this.discussions.map(discussion => (
