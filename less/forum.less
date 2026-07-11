@@ -1,1 +1,75 @@
-//
+.BiscuitManager {
+  padding: 20px;
+}
+
+.BiscuitManager-header h2 {
+  margin-bottom: 5px;
+}
+
+.BiscuitManager-slots {
+  color: var(--muted-color);
+  margin-bottom: 15px;
+}
+
+.BiscuitManager-actions {
+  margin-bottom: 20px;
+}
+
+.BiscuitList {
+  border: 1px solid var(--control-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.BiscuitListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--control-bg);
+  background: var(--body-bg);
+}
+
+.BiscuitListItem:last-child {
+  border-bottom: none;
+}
+
+.BiscuitListItem.is-active {
+  background: var(--control-bg);
+}
+
+.BiscuitListItem.is-frozen {
+  opacity: 0.6;
+}
+
+.BiscuitListItem-name {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.BiscuitListItem-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: normal;
+  font-family: var(--font);
+}
+
+.BiscuitListItem-badge--active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.BiscuitListItem-badge--frozen {
+  background: var(--muted-more-color);
+  color: #fff;
+}
+
+.BiscuitListItem-actions {
+  display: flex;
+  gap: 4px;
+}

@@ -1,3 +1,36 @@
 teacherli07-anonymous:
   forum:
     title: 匿名社区
+    login:
+      phone_or_email: 手机号或邮箱
+    phone:
+      label: 手机号
+      send_code: 发送验证码
+      verify_code: 验证码
+      resend: "{seconds}秒后重发"
+      code_sent: 验证码已发送
+      invalid_phone: 手机号格式不正确
+    biscuit_label:
+      default: "(默认)"
+      frozen: "(已冻结)"
+      deleted: "(已删除)"
+    manager:
+      title: 饼干管理
+      slots_used: "槽位: {used}/{total}"
+      claim_new: 领取新饼干
+      no_biscuits: 暂无饼干
+      confirm_delete: 确定删除此饼干？已发布的帖子保留不变。
+    selector:
+      current: "当前: {biscuit}"
+      select: 选择饼干
+  admin:
+    settings:
+      sms_section: 短信服务配置
+      sms_access_key_id: AccessKey ID
+      sms_access_secret: AccessKey Secret
+      sms_sign_name: 短信签名
+      sms_template_code: 短信模板 CODE
+      slot_section: 饼干槽位配置
+      slot_days_required: 每槽所需注册天数
+      slot_posts_required: 每槽所需发帖数
+      slot_max: 最大槽位数

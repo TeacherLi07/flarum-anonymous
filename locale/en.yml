@@ -1,3 +1,36 @@
 teacherli07-anonymous:
   forum:
     title: Anonymous Community
+    login:
+      phone_or_email: Phone or Email
+    phone:
+      label: Phone Number
+      send_code: Send Code
+      verify_code: Verification Code
+      resend: "{seconds}s"
+      code_sent: Verification code sent
+      invalid_phone: Invalid phone number
+    biscuit_label:
+      default: "(Default)"
+      frozen: "(Frozen)"
+      deleted: "(Deleted)"
+    manager:
+      title: Biscuit Manager
+      slots_used: "Slots: {used}/{total}"
+      claim_new: Claim New Biscuit
+      no_biscuits: No biscuits available
+      confirm_delete: Delete this biscuit? Published posts will remain.
+    selector:
+      current: "Current: {biscuit}"
+      select: Select Biscuit
+  admin:
+    settings:
+      sms_section: SMS Configuration
+      sms_access_key_id: AccessKey ID
+      sms_access_secret: AccessKey Secret
+      sms_sign_name: SMS Signature
+      sms_template_code: SMS Template Code
+      slot_section: Biscuit Slot Configuration
+      slot_days_required: Days required per slot
+      slot_posts_required: Posts required per slot
+      slot_max: Maximum slots
