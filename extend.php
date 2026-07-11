@@ -89,8 +89,8 @@ return [
     // Forum Serializer extensions
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attribute('needBiscuitFreeze', function ($serializer) {
-            $actor = $serializer->getActor();
-            $accountUserId = resolve('session')->get('account_id');
+            $session = $serializer->getRequest()->getAttribute('session');
+            $accountUserId = $session ? $session->get('account_id') : null;
 
             if (! $accountUserId) {
                 return false;
@@ -105,7 +105,8 @@ return [
             return resolve(SlotManager::class)->needsFreeze($accountUser);
         })
         ->attribute('needPhoneBinding', function ($serializer) {
-            $accountUserId = resolve('session')->get('account_id');
+            $session = $serializer->getRequest()->getAttribute('session');
+            $accountUserId = $session ? $session->get('account_id') : null;
 
             if (! $accountUserId) {
                 return false;
@@ -116,13 +117,16 @@ return [
             return $accountUser && empty($accountUser->phone);
         })
         ->attribute('canManageBiscuits', function ($serializer) {
-            return resolve('session')->get('account_id') !== null;
+            $session = $serializer->getRequest()->getAttribute('session');
+            return $session && $session->get('account_id') !== null;
         })
         ->attribute('activeBiscuitUserId', function ($serializer) {
-            return resolve('session')->get('active_biscuit_user_id');
+            $session = $serializer->getRequest()->getAttribute('session');
+            return $session ? $session->get('active_biscuit_user_id') : null;
         })
         ->attribute('accountUserId', function ($serializer) {
-            return resolve('session')->get('account_id');
+            $session = $serializer->getRequest()->getAttribute('session');
+            return $session ? $session->get('account_id') : null;
         }),
 
     // User Serializer - expose display name for biscuit users
@@ -132,18 +136,25 @@ return [
         })
         ->attribute('phone', function ($serializer, $user) {
             $actor = $serializer->getActor();
+            $session = $serializer->getRequest()->getAttribute('session');
+            $accountId = $session ? $session->get('account_id') : null;
 
-            if ($actor->isAdmin() || resolve('session')->get('account_id') == $user->id) {
+            if ($actor->isAdmin() || $accountId == $user->id) {
                 return $user->phone;
             }
 
             return null;
         })
         ->attribute('canManageBiscuits', function ($serializer, $user) {
-            return resolve('session')->get('account_id') == $user->id;
+            $session = $serializer->getRequest()->getAttribute('session');
+            $accountId = $session ? $session->get('account_id') : null;
+            return $accountId == $user->id;
         })
         ->attribute('biscuitSlots', function ($serializer, $user) {
-            if (resolve('session')->get('account_id') != $user->id) {
+            $session = $serializer->getRequest()->getAttribute('session');
+            $accountId = $session ? $session->get('account_id') : null;
+
+            if ($accountId != $user->id) {
                 return null;
             }
 
