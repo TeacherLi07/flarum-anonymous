@@ -218,8 +218,9 @@ app.initializers.add('teacherli07-anonymous', function () {
   app.routes.biscuits = { path: '/biscuits', component: BiscuitManagerPage };
 
   // 4. Session dropdown link
-  if (SessionDropdown && app.forum.attribute('canManageBiscuits')) {
+  if (SessionDropdown) {
     extend(SessionDropdown.prototype, 'items', function (items) {
+      if (!app.forum.attribute('canManageBiscuits')) return;
       items.add('biscuits',
         Button.component({
           icon: 'fas fa-user-secret',
