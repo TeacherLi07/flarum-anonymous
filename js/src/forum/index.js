@@ -62,11 +62,10 @@ app.initializers.add('teacherli07-anonymous', function (app) {
             const firstChar = biscuitString.charAt(0).toUpperCase();
             const hash = biscuitString.split('').reduce((h, c) => c.charCodeAt(0) + ((h << 5) - h), 0);
             const hue = Math.abs(hash) % 360;
-            const bgColor = 'hsl(' + hue + ', 45%, 55%)';
 
             items.remove('avatar');
             items.add('avatar', (
-                <span className={'BiscuitPostAvatar'} style={'background-color: ' + bgColor + '; color: #fff;'}>
+                <span className="BiscuitPostAvatar" style={'background-color: hsl(' + hue + ', 45%, 55%); color: #fff;'}>
                     {firstChar}
                 </span>
             ), 100);
@@ -75,6 +74,28 @@ app.initializers.add('teacherli07-anonymous', function (app) {
             items.add('username', (
                 <span className="BiscuitPostName">{biscuitString}</span>
             ), 80);
+        }
+
+        return items;
+    });
+
+    // Replace PostUser userViewItems to link to biscuit profile instead of user profile
+    override(PostUser.prototype, 'userViewItems', function (original, user) {
+        const items = original(user);
+        const biscuitString = user && user.displayName ? user.displayName() : null;
+
+        if (biscuitString) {
+            // Change the link href in the postUser-name item
+            const nameItem = items.get('postUser-name');
+            if (nameItem) {
+                items.setContent('postUser-name', (
+                    <h3 className="PostUser-name">
+                        <Link href={app.route('biscuitProfile', { biscuitString })}>
+                            {this.linkChildren(user).toArray()}
+                        </Link>
+                    </h3>
+                ), 100);
+            }
         }
 
         return items;
