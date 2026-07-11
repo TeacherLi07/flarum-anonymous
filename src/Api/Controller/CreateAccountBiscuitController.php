@@ -52,6 +52,7 @@ class CreateAccountBiscuitController extends AbstractCreateController
             $biscuitString . '@anonymous.local',
             bin2hex(random_bytes(16))
         );
+        $biscuitUser->is_email_confirmed = true;
         $biscuitUser->save();
 
         $note = Arr::get($request->getParsedBody(), 'data.attributes.note');

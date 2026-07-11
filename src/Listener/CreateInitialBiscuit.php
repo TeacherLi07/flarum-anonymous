@@ -62,6 +62,7 @@ class CreateInitialBiscuit
             bin2hex(random_bytes(16))
         );
 
+        $user->is_email_confirmed = true;
         $user->save();
 
         return $user;

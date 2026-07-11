@@ -53,6 +53,7 @@ class DeleteAccountBiscuitController extends AbstractDeleteController
                     $biscuitString . '@anonymous.local',
                     bin2hex(random_bytes(16))
                 );
+                $biscuitUser->is_email_confirmed = true;
                 $biscuitUser->save();
 
                 $newBiscuit = AccountBiscuit::create([

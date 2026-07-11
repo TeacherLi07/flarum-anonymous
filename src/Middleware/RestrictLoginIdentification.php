@@ -15,7 +15,7 @@ class RestrictLoginIdentification implements MiddlewareInterface
         $path = $request->getUri()->getPath();
         $method = $request->getMethod();
 
-        if ($path === '/api/token' && $method === 'POST') {
+        if (($path === '/api/token' || $path === 'token') && $method === 'POST') {
             $body = $request->getParsedBody();
             $identification = $body['identification'] ?? null;
 
