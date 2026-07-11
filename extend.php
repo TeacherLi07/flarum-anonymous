@@ -21,9 +21,8 @@ return [
 
     new Extend\Locales(__DIR__.'/locale'),
 
-    // Migrations
-    (new Extend\Migration())
-        ->path(__DIR__.'/migrations'),
+    // Migrations are auto-discovered from the migrations/ directory
+    // by Flarum when the extension is enabled.
 
     // Settings
     (new Extend\Settings())
