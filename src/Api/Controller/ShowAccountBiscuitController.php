@@ -5,6 +5,7 @@ namespace TeacherLi07\Anonymous\Api\Controller;
 use Flarum\Api\Controller\AbstractShowController;
 use Psr\Http\Message\ServerRequestInterface;
 use Flarum\Http\RequestUtil;
+use Illuminate\Support\Arr;
 use TeacherLi07\Anonymous\AccountBiscuit;
 use TeacherLi07\Anonymous\Api\Serializer\AccountBiscuitSerializer;
 

@@ -4,6 +4,7 @@ namespace TeacherLi07\Anonymous\Api\Controller;
 
 use Flarum\Api\Controller\AbstractDeleteController;
 use Flarum\Http\RequestUtil;
+use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;
 use TeacherLi07\Anonymous\AccountBiscuit;
 use TeacherLi07\Anonymous\BiscuitGenerator;
