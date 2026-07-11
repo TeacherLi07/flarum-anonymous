@@ -20,11 +20,16 @@ export default class BiscuitProfilePage extends Page {
             url: app.forum.attribute('apiUrl') + '/biscuits/0/discussions?filter[biscuit]=' + encodeURIComponent(bs),
             method: 'GET',
         });
-        const bPromise = app.store.find('biscuits').then(biscuits => {
-            const match = biscuits.find(b => b.biscuitString() === bs);
+        const bPromise = app.request({
+            url: app.forum.attribute('apiUrl') + '/biscuits',
+            method: 'GET',
+            background: true,
+            errorHandler: () => {},
+        }).then(response => {
+            const biscuits = app.store.pushPayload(response);
+            const match = Array.isArray(biscuits) ? biscuits.find(b => b.biscuitString() === bs) : null;
             if (match) {
                 this.birthDate = match.createdAt();
-                this.postCount = 0;
             }
         }).catch(() => {});
 
