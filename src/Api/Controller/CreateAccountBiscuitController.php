@@ -43,7 +43,11 @@ class CreateAccountBiscuitController extends AbstractCreateController
         $availableSlots = $this->slotManager->calculateAvailableSlots($accountUser);
 
         if ($usableCount >= $availableSlots) {
-            throw new \RuntimeException('No available biscuit slots.');
+            throw new \Flarum\Foundation\ValidationException([
+                'message' => 'No available biscuit slots. Wait ' .
+                    $this->slotManager->getSlotDaysRequired() . ' days or make ' .
+                    $this->slotManager->getSlotPostsRequired() . ' posts to unlock more slots.',
+            ]);
         }
 
         $biscuitString = $this->generateUniqueBiscuitString();

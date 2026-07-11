@@ -26,7 +26,7 @@ class BatchFreezeAccountBiscuitsController extends AbstractShowController
         $ids = Arr::get($body, 'data.attributes.ids', []);
 
         if (empty($ids)) {
-            throw new \RuntimeException('No biscuit IDs provided.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'No biscuit IDs provided.']);
         }
 
         $biscuits = AccountBiscuit::where('account_user_id', $accountUserId)
@@ -39,7 +39,7 @@ class BatchFreezeAccountBiscuitsController extends AbstractShowController
             ->count();
 
         if ($afterFreezeCount < 1) {
-            throw new \RuntimeException('At least one active biscuit required.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'At least one active biscuit required.']);
         }
 
         foreach ($biscuits as $biscuit) {

@@ -42,16 +42,16 @@ class RegisterWithPhoneController extends AbstractCreateController
         $password = $attributes['password'] ?? null;
 
         if (! $phone || ! $code || ! $password) {
-            throw new \RuntimeException('Phone, verification code, and password are required.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'Phone, verification code, and password are required.']);
         }
 
         if (! $this->sms->verify($phone, $code)) {
-            throw new \RuntimeException('Invalid or expired verification code.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'Invalid or expired verification code.']);
         }
 
         // Check if phone already registered
         if (User::where('phone', $phone)->exists()) {
-            throw new \RuntimeException('This phone number is already registered.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'This phone number is already registered.']);
         }
 
         $username = substr(sha1($phone), 0, 30);

@@ -30,17 +30,17 @@ class BindPhoneController extends AbstractShowController
         $code = $attributes['verificationCode'] ?? null;
 
         if (! $phone || ! $code) {
-            throw new \RuntimeException('Phone and verification code are required.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'Phone and verification code are required.']);
         }
 
         $sms = resolve(\TeacherLi07\Anonymous\Auth\SmsService::class);
 
         if (! $sms->verify($phone, $code)) {
-            throw new \RuntimeException('Invalid or expired verification code.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'Invalid or expired verification code.']);
         }
 
         if (User::where('phone', $phone)->where('id', '!=', $accountUser->id)->exists()) {
-            throw new \RuntimeException('This phone number is already registered.');
+            throw new \Flarum\Foundation\ValidationException(['message' => 'This phone number is already registered.']);
         }
 
         $accountUser->phone = $phone;
