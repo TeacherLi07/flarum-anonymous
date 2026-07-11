@@ -12,6 +12,7 @@ namespace TeacherLi07\Anonymous\Listener;
 use Flarum\User\Event\Saving;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class RegisterWithPhone
 {
@@ -28,7 +29,7 @@ class RegisterWithPhone
         $phone = Arr::get($data, 'attributes.phone');
         if ($phone) {
             $user->phone = $phone;
-            $user->phone_verified_at = now();
+            $user->phone_verified_at = Carbon::now();
         }
 
         // Auto-generate UUID as username if not provided
